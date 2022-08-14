@@ -11,12 +11,12 @@ interface soloraceProps {
 const START_COUNTDOWN_TIMER = 5;
 
 const solorace: React.FC<soloraceProps> = (props) => {
-  const { raceStarted, setRaceStarted, setQuote } = useStore();
+  const { raceStarted, setGameState } = useStore();
   const [ startCountDown, setStartCountDown ] = useState(START_COUNTDOWN_TIMER);
   const [ countDownStarted, setCountDownStarted ] = useState(false);
 
   useEffect(() =>{
-    setQuote(props.quote);
+    setGameState({quote: props.quote});
   },[])
 
     // start count down interval, start game when countdown is done
@@ -37,7 +37,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
         }
       });
       if(count == START_COUNTDOWN_TIMER){
-        setRaceStarted(true);
+        setGameState({raceStarted: true});
       }
     }, 1000)
   }
