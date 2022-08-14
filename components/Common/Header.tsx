@@ -6,10 +6,10 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({}) => {
-    return (
+  return (
     // display user's name and average words per minute
     <header className="text-center">
         <NavBar />
     </header>
-    )
+  )
 }
