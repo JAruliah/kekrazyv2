@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useStore from '../../store';
 import { GameStats } from './GameStats';
-
 interface GameViewProps {
 
 }
@@ -18,11 +17,12 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     letterArray,
     pointerIndex,
     raceFinished,
+    firstIncorrectIndex,
     setGameState
   } = useStore();
 
   const inputRef = useRef<any>(null);
-
+  // on mount, change status to race started and format the game quote
   useEffect(() => {
     if(raceStarted == true){
       formatGameQuote();
@@ -46,50 +46,62 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     });
   }
 
-  const handleChange = (e:React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key !== "shift key"){
-      // if the letter is equal to the current letter of the current word
-      if(e.key == quoteMap[`${wordArray[currentWord]}`][currentLetter]){
-        // check if everything entered correct up until the current letter of the current word
-        console.log(inputRef.current.value+e.key, "input");
-        console.log(wordArray[currentWord]+"".slice(0, currentLetter+1), 'target word')
-        console.log({currentWord},{currentLetter})
-        // if(inputRef.current.value+e.key == wordArray[currentWord]+" ".slice(0, currentLetter+1)){
-          console.log('made it ')
-          // check if the end of the word
-          if(currentLetter+1 == quoteMap[`${wordArray[currentWord]}`].length){
-            // console.log('end')
-            //check if the value is the last word and last letter in the race
-            if(currentWord+1 == wordArray.length){
-              setGameState({
-                raceFinished:true,
-                raceStarted: false,
-              })
-            }
-            // check if the value inside the input is correct
-            if(inputRef.current.value == wordArray[currentWord]){
-              // move to the next word and clear input
-              setInputValue("");
-              setGameState({
-                currentLetter: 0,
-                currentWord: currentWord + 1,
-                pointerIndex: pointerIndex + 1
-              });
-            }
-          }
-          // otherwise move to the next letter
-          else{
+  // handle changes in input
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    let currentWordArray = quoteMap[`${wordArray[currentWord]}`];
+    let currentWordString = wordArray[currentWord]+" ";
+    let inputFieldLength = e.target.value.length;
+    let pointerIndexDiff = inputFieldLength - inputValue.length;
+    let currentWordUpUntil = currentWordString.slice(0, inputFieldLength);
+    // don't allow more characters than the current word
+    if(inputFieldLength <= currentWordArray.length){
+      //if the character inputted is incorrect , keep track of it's index
+      if(e.target.value != currentWordUpUntil){
+        if(firstIncorrectIndex == null){
+          setGameState({firstIncorrectIndex: inputFieldLength});
+        }
+      }else{
+        setGameState({firstIncorrectIndex:null});
+      }
+      //if it is the last word ignore the white space at the end
+      if(currentWord+1 == wordArray.length){
+        // if it is the last letter
+        if(inputFieldLength == currentWordArray.length-1){
+          // if the word inputted is correct end the game
+          if(e.target.value == currentWordString.trim()){
+            setInputValue('');
             setGameState({
-              currentLetter: currentLetter + 1,
-              pointerIndex: pointerIndex + 1
+              raceFinished: true,
+              raceStarted: false,
+              pointerIndex: 0,
+              currentWord: 0
             });
           }
-        // }
+        }
+        // if it's not the last letter keep moving pointer
+        else{
+          setInputValue(e.target.value);
+          setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
+        }
+      }
+      // if it is the last letter of the word
+      if(inputFieldLength == currentWordArray.length){
+        // if the word inputted is correct move to next word
+        if(e.target.value == currentWordString){
+          setInputValue('');
+          setGameState({
+            pointerIndex: pointerIndex + pointerIndexDiff,
+            currentWord: currentWord + 1
+          });
+        }
+      }
+      // other wise just move on to next letter of the word
+      else{
+        setInputValue(e.target.value);
+        setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
       }
     }
   }
-
-
 
   return (
     <>
@@ -105,8 +117,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         <div className="col-md-6">
           <input 
             className='form-control' 
-            onChange={(e) => setInputValue(e.target.value.trim())} 
-            onKeyDown={(e) => handleChange(e)} 
+            onChange={(e) => handleChange(e)} 
             ref={inputRef} 
             value={inputValue} 
             disabled={raceFinished == true && raceStarted == false ? true: false }

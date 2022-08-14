@@ -46,7 +46,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
   if(raceStarted == false){
     return(
       <div className='row justify-content-center'>
-        {countDownStarted && (
+        {countDownStarted == true && (
           <div className='col-md-6 text-center'>
             <h4>Starting in: <span>{startCountDown}</span></h4>
           </div>

@@ -11,6 +11,7 @@ const useStore = create<Store>((set: any) => ({
   wordArray: [],
   letterArray: [],
   pointerIndex: 0,
+  firstIncorrectIndex: null,
   setGameState: ( input: any ) => set((state:any) => ({...state, ...input}))
 }))
 

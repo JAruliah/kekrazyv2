@@ -10,5 +10,6 @@ export interface Store{
   wordArray: [],
   letterArray: [],
   pointerIndex: number,
+  firstIncorrectIndex: null | number,
   setGameState: ( input:any ) => void
 }
