@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useStore from '../../store';
-import { GameStats } from './GameStats';
+import { GameHeader } from './GameStats';
 interface GameViewProps {
 
 }
@@ -58,10 +58,14 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       //if the character inputted is incorrect , keep track of it's index
       if(e.target.value != currentWordUpUntil){
         if(firstIncorrectIndex == null){
-          setGameState({firstIncorrectIndex: inputFieldLength});
+          setGameState({
+            firstIncorrectIndex: pointerIndex
+          });
         }
       }else{
-        setGameState({firstIncorrectIndex:null});
+        setGameState({
+          firstIncorrectIndex: null
+        });
       }
       //if it is the last word ignore the white space at the end
       if(currentWord+1 == wordArray.length){
@@ -105,11 +109,23 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
 
   return (
     <>
-      <GameStats />
+      <GameHeader />
       <div className='row justify-content-center mb-4'>
         <div className='col-md-6'>
           {quote.content.split('').map((letter, index) => {
-            return <span key={index} className = {pointerIndex == index? "bg-success":"" }>{letter}</span>
+            return (
+              <span 
+                key={index} 
+                className = {
+                pointerIndex == index && firstIncorrectIndex == null? 
+                  "bg-success":
+                  firstIncorrectIndex != null
+                  && (index <= pointerIndex && index > firstIncorrectIndex)? 
+                  "bg-danger":""
+              }>
+                {letter}
+              </span>
+            )
           })}
         </div>
       </div>

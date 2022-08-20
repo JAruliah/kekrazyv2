@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface GameStatsProps {
+interface GameHeaderProps {
 
 }
 
-export const GameStats: React.FC<GameStatsProps> = ({}) => {
+export const GameHeader: React.FC<GameHeaderProps> = ({}) => {
   return (
     <div className='row justify-content-center mb-4'>
       <div className='col-md-6'>

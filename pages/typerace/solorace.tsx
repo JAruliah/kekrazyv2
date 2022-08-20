@@ -9,9 +9,10 @@ interface soloraceProps {
 }
 
 const START_COUNTDOWN_TIMER = 5;
+const GAME_TIMER = 120;
 
 const solorace: React.FC<soloraceProps> = (props) => {
-  const { raceStarted, setGameState } = useStore();
+  const { raceStarted, raceFinished, setGameState } = useStore();
   const [ startCountDown, setStartCountDown ] = useState(START_COUNTDOWN_TIMER);
   const [ countDownStarted, setCountDownStarted ] = useState(false);
 
@@ -37,36 +38,36 @@ const solorace: React.FC<soloraceProps> = (props) => {
         }
       });
       if(count == START_COUNTDOWN_TIMER){
+        setCountDownStarted(false);
         setGameState({raceStarted: true});
       }
     }, 1000)
   }
 
-  // if the race hasent started show start button
-  if(raceStarted == false){
-    return(
-      <div className='row justify-content-center'>
-        {countDownStarted == true && (
-          <div className='col-md-6 text-center'>
-            <h4>Starting in: <span>{startCountDown}</span></h4>
-          </div>
-        )}
-        {countDownStarted == false &&(
-          <div className='col-md-6 text-center'>
-            <h4>Click when ready to start</h4>
-            <button className='btn btn-primary' onClick={() => startRace()}>Start</button>
-          </div>
-        )}
-      </div>
-    )
-  }
-  else{
-    return(
-      <>
+  return(
+    <>
+      {raceStarted == false ? 
+      (
+        <div className='row justify-content-center'>
+          {countDownStarted == true && (
+              <div className='col-md-6 text-center'>
+                <h4>Starting in: <span>{startCountDown}</span></h4>
+              </div>
+            )
+          }
+          {(countDownStarted == false || raceFinished == true) &&(
+            <div className='col-md-6 text-center'>
+              <h4>Click when ready to start</h4>
+              <button className='btn btn-primary' onClick={() => startRace()}>Start</button>
+            </div>
+          )}
+        </div>
+      )
+      :
         <GameView />
-      </>
-    );
-  }
+      }
+    </>
+  );
 }
 
 // get the props on the server side
