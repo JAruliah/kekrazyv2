@@ -1,7 +1,9 @@
 const actions = (set:any, get:any) => {
   return{
     // set state
-    setGameState: ( input: any ) => set((state:any) => ({...state, ...input})),
+    setGameState: ( input: any ) => {
+      set((state:any) => ({...state, ...input}))
+    },
 
     // start the game timer
     startGameTimer: () => {
