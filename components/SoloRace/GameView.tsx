@@ -28,7 +28,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       formatGameQuote();
     }
     inputRef.current?.focus();
-  }, [])
+  }, [raceStarted])
 
 
   // we need to split the quote into an array
@@ -78,7 +78,8 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
               raceFinished: true,
               raceStarted: false,
               pointerIndex: 0,
-              currentWord: 0
+              currentWord: 0,
+              firstIncorrectIndex: null
             });
           }
         }
@@ -89,7 +90,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         }
       }
       // if it is the last letter of the word
-      if(inputFieldLength == currentWordArray.length){
+      else if(inputFieldLength == currentWordArray.length){
         // if the word inputted is correct move to next word
         if(e.target.value == currentWordString){
           setInputValue('');
@@ -106,7 +107,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       }
     }
   }
-
+  console.log(raceStarted)
   return (
     <>
       <GameHeader />
@@ -136,7 +137,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
             onChange={(e) => handleChange(e)} 
             ref={inputRef} 
             value={inputValue} 
-            disabled={raceFinished == true && raceStarted == false ? true: false }
+            disabled={raceFinished == true || raceStarted == false ? true: false }
           />
         </div>
       </div>

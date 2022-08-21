@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
 import useStore from '../../store';
 import axios from 'axios';
 import { Quote } from '../../interfaces/SoloRace';
@@ -30,6 +29,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
         // if 0 start game and clear interval
         if(prevState == 0){
           clearInterval(startCountDownTimer);
+          setStartCountDown(START_COUNTDOWN_TIMER);
           return prevState;
         }
         // keep counting down if not 0
@@ -39,15 +39,12 @@ const solorace: React.FC<soloraceProps> = (props) => {
       });
       if(count == START_COUNTDOWN_TIMER){
         setCountDownStarted(false);
-        setGameState({raceStarted: true});
+        setGameState({raceStarted: true, raceFinished: false});
       }
     }, 1000)
   }
-
   return(
     <>
-      {raceStarted == false ? 
-      (
         <div className='row justify-content-center'>
           {countDownStarted == true && (
               <div className='col-md-6 text-center'>
@@ -55,17 +52,18 @@ const solorace: React.FC<soloraceProps> = (props) => {
               </div>
             )
           }
-          {(countDownStarted == false || raceFinished == true) &&(
+          {(countDownStarted == false && raceStarted == false) &&(
             <div className='col-md-6 text-center'>
               <h4>Click when ready to start</h4>
               <button className='btn btn-primary' onClick={() => startRace()}>Start</button>
             </div>
           )}
         </div>
-      )
-      :
-        <GameView />
-      }
+        {
+          countDownStarted == true || raceStarted == true ? 
+          <GameView />
+          : null
+        }
     </>
   );
 }
