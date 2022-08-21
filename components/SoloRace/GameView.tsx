@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useStore from '../../store';
-import { GameHeader } from './GameStats';
+import { GameHeader } from './GameHeader';
 interface GameViewProps {
 
 }
@@ -18,7 +18,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     pointerIndex,
     raceFinished,
     firstIncorrectIndex,
-    setGameState
+    actions
   } = useStore();
 
   const inputRef = useRef<any>(null);
@@ -40,7 +40,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       const wordArray = word.split('').concat(' ');
       quoteMapCopy[`${word}`] = wordArray; 
     })
-    setGameState({
+    actions.setGameState({
       wordArray: quoteArray,
       quoteMap: quoteMapCopy
     });
@@ -58,12 +58,12 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       //if the character inputted is incorrect , keep track of it's index
       if(e.target.value != currentWordUpUntil){
         if(firstIncorrectIndex == null){
-          setGameState({
+          actions.setGameState({
             firstIncorrectIndex: pointerIndex
           });
         }
       }else{
-        setGameState({
+        actions.setGameState({
           firstIncorrectIndex: null
         });
       }
@@ -74,7 +74,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
           // if the word inputted is correct end the game
           if(e.target.value == currentWordString.trim()){
             setInputValue('');
-            setGameState({
+            actions.setGameState({
               raceFinished: true,
               raceStarted: false,
               pointerIndex: 0,
@@ -86,7 +86,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         // if it's not the last letter keep moving pointer
         else{
           setInputValue(e.target.value);
-          setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
+          actions.setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
         }
       }
       // if it is the last letter of the word
@@ -94,7 +94,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         // if the word inputted is correct move to next word
         if(e.target.value == currentWordString){
           setInputValue('');
-          setGameState({
+          actions.setGameState({
             pointerIndex: pointerIndex + pointerIndexDiff,
             currentWord: currentWord + 1
           });
@@ -103,11 +103,10 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       // other wise just move on to next letter of the word
       else{
         setInputValue(e.target.value);
-        setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
+        actions.setGameState({pointerIndex: pointerIndex + pointerIndexDiff});
       }
     }
   }
-  console.log(raceStarted)
   return (
     <>
       <GameHeader />

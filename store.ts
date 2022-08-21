@@ -1,7 +1,9 @@
 import create from 'zustand';
 import { Store } from './interfaces/Store'; 
+import { GAME_TIMER } from './constantVariables';
+import actions from './actions';
 
-const useStore = create<Store>((set: any) => ({
+const useStore = create<Store>((set: any, get: any) => ({
   raceStarted: false,
   raceFinished: false,
   quote: {content:"", author:"", tags:[]},
@@ -12,7 +14,8 @@ const useStore = create<Store>((set: any) => ({
   letterArray: [],
   pointerIndex: 0,
   firstIncorrectIndex: null,
-  setGameState: ( input: any ) => set((state:any) => ({...state, ...input}))
+  gameTimer: GAME_TIMER,
+  actions: actions(set, get)
 }))
 
 export default useStore;

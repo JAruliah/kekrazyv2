@@ -11,5 +11,6 @@ export interface Store{
   letterArray: [],
   pointerIndex: number,
   firstIncorrectIndex: null | number,
-  setGameState: ( input:any ) => void
+  gameTimer: number,
+  actions: any
 }

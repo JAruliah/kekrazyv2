@@ -3,20 +3,19 @@ import useStore from '../../store';
 import axios from 'axios';
 import { Quote } from '../../interfaces/SoloRace';
 import { GameView } from '../../components/SoloRace/GameView';
+import { START_COUNTDOWN_TIMER } from '../../constantVariables';
+
 interface soloraceProps {
   quote: Quote
 }
 
-const START_COUNTDOWN_TIMER = 5;
-const GAME_TIMER = 120;
-
 const solorace: React.FC<soloraceProps> = (props) => {
-  const { raceStarted, raceFinished, setGameState } = useStore();
+  const { raceStarted, actions } = useStore();
   const [ startCountDown, setStartCountDown ] = useState(START_COUNTDOWN_TIMER);
   const [ countDownStarted, setCountDownStarted ] = useState(false);
 
   useEffect(() =>{
-    setGameState({quote: props.quote});
+    actions.setGameState({quote: props.quote});
   },[])
 
     // start count down interval, start game when countdown is done
@@ -39,7 +38,8 @@ const solorace: React.FC<soloraceProps> = (props) => {
       });
       if(count == START_COUNTDOWN_TIMER){
         setCountDownStarted(false);
-        setGameState({raceStarted: true, raceFinished: false});
+        actions.setGameState({raceStarted: true, raceFinished: false});
+        actions.startGameTimer();
       }
     }, 1000)
   }
