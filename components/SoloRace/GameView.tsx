@@ -16,16 +16,19 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     pointerIndex,
     raceFinished,
     firstIncorrectIndex,
+    completedWords,
+    correctInputs,
+    incorrectInputs,
     actions
   } = useStore();
 
   const inputRef = useRef<any>(null);
   // on mount, change status to race started and format the game quote
   useEffect(() => {
-    if(raceStarted == true){
-      formatGameQuote();
+    formatGameQuote();
+    if(raceStarted){
+      inputRef.current?.focus();
     }
-    inputRef.current?.focus();
   }, [raceStarted])
 
 
@@ -55,12 +58,16 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     if(inputFieldLength <= currentWordArray.length){
       //if the character inputted is incorrect , keep track of it's index
       if(e.target.value != currentWordUpUntil){
+        actions.setGameState({incorrectInputs: incorrectInputs + 1});
         if(firstIncorrectIndex == null){
           actions.setGameState({
             firstIncorrectIndex: pointerIndex
           });
         }
       }else{
+        if(pointerIndexDiff > 0){
+          actions.setGameState({correctInputs: correctInputs + 1})
+        }
         actions.setGameState({
           firstIncorrectIndex: null
         });
@@ -77,7 +84,8 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
               raceStarted: false,
               pointerIndex: 0,
               currentWord: 0,
-              firstIncorrectIndex: null
+              firstIncorrectIndex: null,
+              completedWords: completedWords + 1
             });
           }
         }
@@ -94,7 +102,8 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
           setInputValue('');
           actions.setGameState({
             pointerIndex: pointerIndex + pointerIndexDiff,
-            currentWord: currentWord + 1
+            currentWord: currentWord + 1,
+            completedWords: completedWords + 1
           });
         }
       }
@@ -105,26 +114,44 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       }
     }
   }
+  // render the words for the game
+  const renderWords = () => {
+    let currentLetterIndex = 0;
+    return(
+      wordArray.map((word:string, index:number) => {
+        return(
+          quoteMap[word].map((letter:string, i:number) => {
+            currentLetterIndex ++;
+            return(
+              <span 
+                key={currentLetterIndex -1}
+                className = {
+                  pointerIndex == currentLetterIndex-1 && firstIncorrectIndex == null? 
+                    "bg-success":
+                    firstIncorrectIndex != null
+                    && (currentLetterIndex-1 <= pointerIndex && currentLetterIndex-1 > firstIncorrectIndex)? 
+                    "bg-danger":""
+                }>
+                  {
+                    // if this is the current word underline it
+                    currentWord == index ? 
+                      <u>{letter}</u>
+                    : letter
+                  }
+              </span>
+            );
+          })
+        );
+      })
+    );
+  }
+
   return (
     <>
       <GameHeader />
       <div className='row justify-content-center mb-4'>
         <div className='col-md-6'>
-          {quote.content.split('').map((letter, index) => {
-            return (
-              <span 
-                key={index} 
-                className = {
-                pointerIndex == index && firstIncorrectIndex == null? 
-                  "bg-success":
-                  firstIncorrectIndex != null
-                  && (index <= pointerIndex && index > firstIncorrectIndex)? 
-                  "bg-danger":""
-              }>
-                {letter}
-              </span>
-            )
-          })}
+          {renderWords()}
         </div>
       </div>
       <div className="row justify-content-center">

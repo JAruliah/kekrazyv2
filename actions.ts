@@ -1,3 +1,5 @@
+import { GAME_TIMER } from './constantVariables';
+
 const actions = (set:any, get:any) => {
   return{
     // set state
@@ -7,16 +9,42 @@ const actions = (set:any, get:any) => {
 
     // start the game timer
     startGameTimer: () => {
+      let scoreCalculateInterval:NodeJS.Timer;
       // get the state
-      const storeState = get();
+      const gameTimer = get().gameTimer;
+      let gameTimerCopy = gameTimer;
       // set an interval
       const gameTime = setInterval(() => {
-        set((state:any) => ({gameTimer: state.gameTimer - 1}))
-      }, 1000)
-      // if the timer reaches 0 clear the interval
-      if(storeState.gameTimer == 0){
-        clearInterval(gameTime);
-      }
+        const raceFinished = get().raceFinished;
+        if(scoreCalculateInterval == undefined){
+          // set an interval to update game scores while playing
+          scoreCalculateInterval = setInterval(() => {
+            const completedWords = get().completedWords;
+            const raceFinished = get().raceFinished;
+            const correctInputs = get().correctInputs;
+            const incorrectInputs = get().incorrectInputs;
+            const pointerIndex = get().pointerIndex;
+            // calculate wpm
+            let timePassed = GAME_TIMER - gameTimerCopy;
+            let wpm = Math.floor(completedWords / (timePassed/60));
+            //calculate accuracy
+            let accuracy = Math.floor((correctInputs - incorrectInputs) / pointerIndex * 100);
+            set(() => ({wpmScore: wpm}));
+            set(() => ({accuracyScore: accuracy}));
+            if(raceFinished){
+              clearInterval(scoreCalculateInterval);
+            }
+          }, 1000);
+        }
+        set((state:any) => ({gameTimer: state.gameTimer - 1}));
+        gameTimerCopy--;
+        // if the timer reaches 0 clear the interval
+        if(gameTimerCopy == 0 || raceFinished){
+          set(() => ({raceFinished: true}));
+          set(() => ({raceStarted: false}));
+          clearInterval(gameTime);
+        }
+      }, 1000);
     }
     
   }

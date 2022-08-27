@@ -45,25 +45,24 @@ const solorace: React.FC<soloraceProps> = (props) => {
   }
   return(
     <>
-        <div className='row justify-content-center'>
-          {countDownStarted == true && (
-              <div className='col-md-6 text-center'>
-                <h4>Starting in: <span>{startCountDown}</span></h4>
-              </div>
-            )
-          }
-          {(countDownStarted == false && raceStarted == false) &&(
-            <div className='col-md-6 text-center'>
-              <h4>Click when ready to start</h4>
-              <button className='btn btn-primary' onClick={() => startRace()}>Start</button>
-            </div>
-          )}
-        </div>
-        {
-          countDownStarted == true || raceStarted == true ? 
-          <GameView />
-          : null
-        }
+      <div className='row justify-content-center'>
+        {countDownStarted == true && (
+          <div className='col-md-6 text-center'>
+            <h4>Starting in: <span>{startCountDown}</span></h4>
+          </div>
+        )}
+        {(countDownStarted == false && raceStarted == false) && (
+          <div className='col-md-6 text-center'>
+            <h4>Click when ready to start</h4>
+            <button className='btn btn-primary' onClick={() => startRace()}>Start</button>
+          </div>
+        )}
+      </div>
+      {
+        countDownStarted == true || raceStarted == true ? 
+        <GameView />
+        : null
+      }
     </>
   );
 }

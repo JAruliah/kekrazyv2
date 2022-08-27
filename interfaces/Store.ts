@@ -10,5 +10,10 @@ export interface Store{
   pointerIndex: number,
   firstIncorrectIndex: null | number,
   gameTimer: number,
+  completedWords: number,
+  correctInputs: number,
+  incorrectInputs: number,
+  wpmScore: number,
+  accuracyScore: number,
   actions: any
 }

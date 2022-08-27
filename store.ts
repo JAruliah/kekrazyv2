@@ -13,6 +13,11 @@ const useStore = create<Store>((set: any, get: any) => ({
   pointerIndex: 0,
   firstIncorrectIndex: null,
   gameTimer: GAME_TIMER,
+  completedWords: 0,
+  correctInputs: 0,
+  incorrectInputs: 0,
+  wpmScore: 0,
+  accuracyScore: 0,
   actions: actions(set, get)
 }))
 
