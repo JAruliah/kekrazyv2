@@ -1,7 +1,8 @@
-import { GAME_TIMER } from './constantVariables';
+import { GAME_TIMER } from '../constantVariables';
+import { initialState } from '../store';
 
-const actions = (set:any, get:any) => {
-  return{
+const gameStateActions = (set:any, get:any) => {
+  return{ 
     // set state
     setGameState: ( input: any ) => {
       set((state:any) => ({...state, ...input}))
@@ -30,7 +31,9 @@ const actions = (set:any, get:any) => {
             //calculate accuracy
             let accuracy = Math.floor((correctInputs - incorrectInputs) / pointerIndex * 100);
             set(() => ({wpmScore: wpm}));
-            set(() => ({accuracyScore: accuracy}));
+            if(accuracy <= 100){
+              set(() => ({accuracyScore: accuracy}));
+            }
             if(raceFinished){
               clearInterval(scoreCalculateInterval);
             }
@@ -45,8 +48,17 @@ const actions = (set:any, get:any) => {
           clearInterval(gameTime);
         }
       }, 1000);
+    },
+
+    // play a new game
+    playAgain: (quote:{}) => {
+      set({...initialState, quote: quote});
+    },
+
+    resetGameState: () => {
+      set(initialState);
     }
     
   }
 }
-export default actions;
+export default gameStateActions;

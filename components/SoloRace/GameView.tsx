@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useStore from '../../store';
+import useGameStore from '../../store';
 import { GameHeader } from './GameHeader';
+import styles from '../../styles/SoloRace.module.css';
 interface GameViewProps {
 
 }
@@ -20,7 +21,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     correctInputs,
     incorrectInputs,
     actions
-  } = useStore();
+  } = useGameStore();
 
   const inputRef = useRef<any>(null);
   // on mount, change status to race started and format the game quote
@@ -126,12 +127,15 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
               <span 
                 key={currentLetterIndex -1}
                 className = {
-                  pointerIndex == currentLetterIndex-1 && firstIncorrectIndex == null? 
-                    "bg-success":
+                  pointerIndex > currentLetterIndex-1 && (firstIncorrectIndex == null ||currentLetterIndex-1 < firstIncorrectIndex)? 
+                    "text-success":
                     firstIncorrectIndex != null
-                    && (currentLetterIndex-1 <= pointerIndex && currentLetterIndex-1 > firstIncorrectIndex)? 
-                    "bg-danger":""
-                }>
+                    && (currentLetterIndex-1 < pointerIndex && currentLetterIndex-1 >= firstIncorrectIndex)? 
+                    "text-danger":
+                    currentLetterIndex - 1 == pointerIndex ? `${styles.currentLetterCursor}`: "" 
+                }
+                id={`${currentLetterIndex-1}`}
+                >
                   {
                     // if this is the current word underline it
                     currentWord == index ? 
@@ -150,7 +154,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     <>
       <GameHeader />
       <div className='row justify-content-center mb-4'>
-        <div className='col-md-6'>
+        <div className={raceFinished ? `col-md-6 bg-secondary ${styles.gameWords}`:`col-md-6 ${styles.gameWords}`}>
           {renderWords()}
         </div>
       </div>

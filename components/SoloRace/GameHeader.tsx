@@ -1,12 +1,12 @@
 import React from 'react';
-import useStore from '../../store';
+import useGameStore from '../../store';
 
 interface GameHeaderProps {
 
 }
 
 export const GameHeader: React.FC<GameHeaderProps> = ({}) => {
-  const { gameTimer, wpmScore, accuracyScore } = useStore();
+  const { gameTimer, wpmScore, accuracyScore } = useGameStore();
   return (
     <div className='row justify-content-center mb-4'>
       <div className='col-md-6'>

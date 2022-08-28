@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+// import styles from '../styles/Home.module.css';
 import { useUser } from "@auth0/nextjs-auth0";
 import React from 'react';
 import { Spinner } from '../components/Common/Spinner';
