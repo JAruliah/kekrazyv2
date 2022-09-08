@@ -1,12 +1,11 @@
 import React from 'react';
-import { useUser } from "@auth0/nextjs-auth0";
+import { signIn } from 'next-auth/react';
 
 interface NavBarProps {
 
 }
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
-  const { user } = useUser();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div className="container">
@@ -23,7 +22,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
               <a className="nav-link" href="/typerace">Type!</a>
             </li>
           </ul>
-          <a className='btn btn-primary' href={user ? '/api/auth/logout':'/api/auth/login'}>{user ? "Logout":"Login"}</a>
+          <a className='btn btn-primary' onClick={() => signIn()}>Login</a>
         </div>
       </div>
     </nav>

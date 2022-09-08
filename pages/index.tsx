@@ -1,30 +1,26 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
-import { useUser } from "@auth0/nextjs-auth0";
 import React from 'react';
 import { Spinner } from '../components/Common/Spinner';
 
 const Home: NextPage = () => {
-  const { user, error, isLoading } = useUser();
 
-  if(isLoading){
-    return <Spinner />
-  }
-  else if(user){
-    return(
-      <div>
-        <h3>Hi, {user.name}</h3>
-      </div>
-    )
-  }
-  else{
+  // if(isLoading){
+  //   return <Spinner />
+  // }
+  // else if(user){
+  //   return(
+  //     <div>
+  //       <h3>Hi, {user.name}</h3>
+  //     </div>
+  //   )
+  // }
     return(
       <div>
         <h3>Welcome!</h3>
       </div>
     )
-  }
 
   // if there is a logged in user welcome them
   // if(user){
