@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface index {
 
@@ -22,7 +23,9 @@ const index: React.FC<index> = ({}) => {
             <div className="card-body">
               <h5 className="card-title">Solo Test!</h5>
               <p className="card-text">Practice your typing speed on your own</p>
-              <a href="/typerace/solorace" className="btn btn-primary">Play</a>
+              <Link href={'/typerace/solorace'}>
+                <a className="btn btn-primary">Play</a>
+              </Link>
             </div>
           </div>
         </div>
@@ -32,7 +35,9 @@ const index: React.FC<index> = ({}) => {
             <div className="card-body">
               <h5 className="card-title">Online Race! - Coming Soon</h5>
               <p className="card-text">Test your typing speed against other players!</p>
-              <a href="#" className="btn btn-primary disabled">Play</a>
+              <Link href={'#'}>
+                <a className="btn btn-primary disabled">Play</a>
+              </Link>
             </div>
           </div>
         </div>

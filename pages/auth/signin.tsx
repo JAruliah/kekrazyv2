@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 const signin = ({ }) => {
@@ -14,14 +15,15 @@ const signin = ({ }) => {
     e.preventDefault();
     // if there are inputs then attemp the sign in 
     try{
-      const signInResponse = await signIn("credentials", { username: loginForm.username, password: loginForm.password , redirect:false});
-      if(signInResponse?.error == null){
-        console.log('made it')
-        setErrorMessage('');
-        router.push('/');
-      }else{
-        setErrorMessage('Please ensure your credentials are correct');
-      }
+      signIn("credentials", { username: loginForm.username, password: loginForm.password, redirect: false})
+      .then(res => {
+        if(res?.ok == false){
+          setErrorMessage('Please ensure your credentials are correct');
+        }else{
+          router.push('/');
+        }
+      })
+      // setErrorMessage('please ensure your credentials are correct');
     }catch(err){
       setErrorMessage('oops something went wrong');
     }
@@ -39,6 +41,9 @@ const signin = ({ }) => {
         <input name="username" type="text" className="form-control" value={loginForm.username} onChange={(e) => setLoginForm({...loginForm, username: e.target.value})} required={true}/>
         <label>Password</label>
         <input name="password" type="password" className="form-control" value={loginForm.password} onChange={(e) => setLoginForm({...loginForm, password: e.target.value})} required={true}/>
+        <Link href={'/auth/register'}>
+          <a style={{display:"block"}}>Dont have an account? Register here!</a>
+        </Link>
         <button type="submit" className="btn btn-primary mt-2">Sign in</button>
       </form>
     </>
