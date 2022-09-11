@@ -3,9 +3,11 @@ import Head from 'next/head';
 // import styles from '../styles/Home.module.css';
 import React from 'react';
 import { Spinner } from '../components/Common/Spinner';
+import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
-
+  const session = useSession();
+  console.log(session)
   // if(isLoading){
   //   return <Spinner />
   // }
