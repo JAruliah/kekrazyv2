@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import Box from "@mui/material/Box";
 
 const register = () => {
   const router = useRouter();
@@ -43,34 +44,35 @@ const register = () => {
   }
   
   return(
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <h3>Register</h3>
-      {errorMessage.length > 0 ? 
-        <div className="alert alert-warning mt-2" style={{marginBottom:"0"}} role="alert">
-          {errorMessage}
-        </div>
-      :null}
-      <label>First Name</label>
-      <input className="form-control" value={registerForm.firstName} onChange={(e) => setRegisterForm({...registerForm, firstName: e.target.value})} required={true}/>
+    <Box>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <h3>Register</h3>
+        {errorMessage.length > 0 ? 
+          <div className="alert alert-warning mt-2" style={{marginBottom:"0"}} role="alert">
+            {errorMessage}
+          </div>
+        :null}
+        <label>First Name</label>
+        <input className="form-control" value={registerForm.firstName} onChange={(e) => setRegisterForm({...registerForm, firstName: e.target.value})} required={true}/>
 
-      <label>Last Name</label>
-      <input className="form-control" value={registerForm.lastName} onChange={(e) => setRegisterForm({...registerForm, lastName: e.target.value})} required={true}/>
+        <label>Last Name</label>
+        <input className="form-control" value={registerForm.lastName} onChange={(e) => setRegisterForm({...registerForm, lastName: e.target.value})} required={true}/>
 
-      <label>Email</label>
-      <input className="form-control" type="email" value={registerForm.email} onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})} required={true}/>
+        <label>Email</label>
+        <input className="form-control" type="email" value={registerForm.email} onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})} required={true}/>
 
-      <label>Username</label>
-      <input className="form-control" value={registerForm.username} onChange={(e) => setRegisterForm({...registerForm, username: e.target.value})} required={true}/>
+        <label>Username</label>
+        <input className="form-control" value={registerForm.username} onChange={(e) => setRegisterForm({...registerForm, username: e.target.value})} required={true}/>
 
-      <label>Password</label>
-      <input className="form-control" type="password" value={registerForm.password} onChange={(e) => setRegisterForm({...registerForm, password: e.target.value})} required={true}/>
+        <label>Password</label>
+        <input className="form-control" type="password" value={registerForm.password} onChange={(e) => setRegisterForm({...registerForm, password: e.target.value})} required={true}/>
 
-      <label>Confirm Password</label>
-      <input className="form-control" type="password" value={registerForm.confirmPassword} onChange={(e) => setRegisterForm({...registerForm, confirmPassword: e.target.value})} required={true}/>
+        <label>Confirm Password</label>
+        <input className="form-control" type="password" value={registerForm.confirmPassword} onChange={(e) => setRegisterForm({...registerForm, confirmPassword: e.target.value})} required={true}/>
 
-      <button className="btn btn-primary mt-2" type="submit" disabled={loading}>Register</button>
-
-    </form>
+        <button className="btn btn-primary mt-2" type="submit" disabled={loading}>Register</button>
+      </form>
+    </Box>
   );
 }
 

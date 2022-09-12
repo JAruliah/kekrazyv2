@@ -4,6 +4,8 @@ import Head from 'next/head';
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import { Spinner } from '../components/Common/Spinner';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const Home: NextPage = () => {
   const { data: session , status} = useSession();
@@ -12,15 +14,15 @@ const Home: NextPage = () => {
   }
   else if(session){
     return(
-      <>
-        <h3>Hi, {session.user.firstName}!</h3>
-      </>
+      <Box>
+        <Typography variant='h4'>Hi, {session.user.firstName}!</Typography>
+      </Box>
     );
   }else{
     return(
-      <>
-        <h3>Welcome!</h3>
-      </>
+      <Box>
+        <Typography variant='h4'>Welcome!</Typography>
+      </Box>
     );
   }
 }

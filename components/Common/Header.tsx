@@ -1,15 +1,11 @@
 import React from 'react';
 import { NavBar } from './NavBar';
 
-interface HeaderProps {
-
-}
-
-export const Header: React.FC<HeaderProps> = ({}) => {
+export const Header: React.FC = () => {
   return (
     // display user's name and average words per minute
     <header className="text-center">
-        <NavBar />
+      <NavBar />
     </header>
-  )
+  );
 }

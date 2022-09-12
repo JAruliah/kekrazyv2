@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Box from '@mui/material/Box'
 
 interface index {
 
@@ -7,7 +8,7 @@ interface index {
 
 const index: React.FC<index> = ({}) => {
   return (
-    <>
+    <Box>
       <div className='row my-4'>
         <div className='col-12'>
           <h3>Choose a race</h3>
@@ -42,7 +43,7 @@ const index: React.FC<index> = ({}) => {
           </div>
         </div>
       </div>
-    </>
+    </Box>
   )
 }
 export default index;

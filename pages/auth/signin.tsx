@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
 
 const signin = ({ }) => {
   const router = useRouter();
@@ -29,8 +31,8 @@ const signin = ({ }) => {
     }
   }
   return (
-    <>
-      <h3>Sign in</h3>
+    <Box>
+      <Typography variant="h4">Sign in</Typography>
       {errorMessage.length > 0 ?
         <div className="alert alert-warning mt-2" style={{marginBottom:"0"}} role="alert">
           {errorMessage}
@@ -46,7 +48,7 @@ const signin = ({ }) => {
         </Link>
         <button type="submit" className="btn btn-primary mt-2">Sign in</button>
       </form>
-    </>
+    </Box>
   )
 }
 
