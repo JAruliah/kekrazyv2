@@ -13,6 +13,7 @@ export const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
     <Box className="content">
       {/* <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></Script> */}
       <Header />
+      <br></br>
       <Container maxWidth={false}>
         { children }
       </Container>

@@ -1,48 +1,52 @@
 import React from 'react';
 import Link from 'next/link';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 
-interface index {
-
-}
-
-const index: React.FC<index> = ({}) => {
+const index: React.FC = () => {
   return (
     <Box>
-      <div className='row my-4'>
-        <div className='col-12'>
-          <h3>Choose a race</h3>
-          <span>
+      <Grid container mb={2}>
+        <Grid item>
+          <Typography variant='h4'>Choose a race</Typography>
+          <Typography variant='subtitle1'>
             Ready to test your typing speed? Choose a race below
-          </span>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-6'>
-          <div className="card">
-            {/* <img src="..." className="card-img-top" alt="..." /> */}
-            <div className="card-body">
-              <h5 className="card-title">Solo Test!</h5>
-              <p className="card-text">Practice your typing speed on your own</p>
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} justifyContent="center" mb={2}>
+        <Grid item xs={12} sm={6}>
+          <Grid component={Card} style={{height: "100%"}}>
+            <CardContent>
+              <Typography variant="h5">Solo Test!</Typography>
+              <Typography>Practice your typing speed on your own</Typography>
+            </CardContent>
+            <CardActions>
               <Link href={'/typerace/solorace'}>
-                <a className="btn btn-primary">Play</a>
+                <Button variant='contained'>Play</Button>
               </Link>
-            </div>
-          </div>
-        </div>
-        <div className='col-6'>
-          <div className="card bg-secondary">
-            {/* <img src="..." className="card-img-top" alt="..." /> */}
-            <div className="card-body">
-              <h5 className="card-title">Online Race! - Coming Soon</h5>
-              <p className="card-text">Test your typing speed against other players!</p>
+            </CardActions>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Grid component={Card} style={{height: "100%"}}>
+            <CardContent>
+              <Typography variant='h5'>Online Race! - Coming Soon</Typography>
+              <Typography variant="body1">Test your typing speed against other players!</Typography>
+            </CardContent>
+            <CardActions>
               <Link href={'#'}>
-                <a className="btn btn-primary disabled">Play</a>
+                <Button variant='contained' color='secondary' disabled>Play</Button>
               </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+            </CardActions>
+          </Grid>
+        </Grid>
+      </Grid>
     </Box>
   )
 }

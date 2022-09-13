@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { Spinner } from '../components/Common/Spinner';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 const Home: NextPage = () => {
   const { data: session , status} = useSession();
@@ -14,15 +15,19 @@ const Home: NextPage = () => {
   }
   else if(session){
     return(
-      <Box>
-        <Typography variant='h4'>Hi, {session.user.firstName}!</Typography>
-      </Box>
+      <Grid container>
+        <Grid item>
+          <Typography variant='h4'>Hi, {session.user.firstName}!</Typography>
+        </Grid>
+      </Grid>
     );
   }else{
     return(
-      <Box>
-        <Typography variant='h4'>Welcome!</Typography>
-      </Box>
+      <Grid container>
+        <Grid item>
+          <Typography variant='h4'>Welcome!</Typography>
+        </Grid>
+      </Grid>
     );
   }
 }
