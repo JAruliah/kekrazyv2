@@ -8,4 +8,4 @@ export const Header: React.FC = () => {
       <NavBar />
     </header>
   );
-}
+};

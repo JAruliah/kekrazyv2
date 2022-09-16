@@ -13,41 +13,45 @@ const index: React.FC = () => {
     <Box>
       <Grid container mb={2}>
         <Grid item>
-          <Typography variant='h4'>Choose a race</Typography>
-          <Typography variant='subtitle1'>
+          <Typography variant="h4">Choose a race</Typography>
+          <Typography variant="subtitle1">
             Ready to test your typing speed? Choose a race below
           </Typography>
         </Grid>
       </Grid>
       <Grid container spacing={2} justifyContent="center" mb={2}>
         <Grid item xs={12} sm={6}>
-          <Grid component={Card} style={{height: "100%"}}>
+          <Grid component={Card} style={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h5">Solo Test!</Typography>
               <Typography>Practice your typing speed on your own</Typography>
             </CardContent>
             <CardActions>
               <Link href={'/typerace/solorace'}>
-                <Button variant='contained'>Play</Button>
+                <Button variant="contained">Play</Button>
               </Link>
             </CardActions>
           </Grid>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Grid component={Card} style={{height: "100%"}}>
+          <Grid component={Card} style={{ height: '100%' }}>
             <CardContent>
-              <Typography variant='h5'>Online Race! - Coming Soon</Typography>
-              <Typography variant="body1">Test your typing speed against other players!</Typography>
+              <Typography variant="h5">Online Race! - Coming Soon</Typography>
+              <Typography variant="body1">
+                Test your typing speed against other players!
+              </Typography>
             </CardContent>
             <CardActions>
               <Link href={'#'}>
-                <Button variant='contained' color='secondary' disabled>Play</Button>
+                <Button variant="contained" color="secondary" disabled>
+                  Play
+                </Button>
               </Link>
             </CardActions>
           </Grid>
         </Grid>
       </Grid>
     </Box>
-  )
-}
+  );
+};
 export default index;

@@ -1,5 +1,5 @@
-export interface Quote{
-    author: string,
-    content: string,
-    tags: string[]
+export interface Quote {
+  author: string;
+  content: string;
+  tags: string[];
 }

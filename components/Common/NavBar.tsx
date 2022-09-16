@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,26 +13,30 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import { useSession, signIn, signOut} from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 // const pages = ['Home', 'Type!',];
-const pages : any = {
-  "Home": "/",
-  "Type!":"/typerace"
+const pages: any = {
+  Home: '/',
+  'Type!': '/typerace',
 };
-const settings : any = {
-  "Profile": "#",
-  "Logout": ''
-}
+const settings: any = {
+  Profile: '#',
+  Logout: '',
+};
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -51,7 +54,7 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" style={{backgroundColor:"#041424"}}>
+    <AppBar position="static" style={{ backgroundColor: '#041424' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -147,61 +150,67 @@ export const NavBar = () => {
             ))}
           </Box>
 
-          {session ? 
+          {session ? (
             <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {Object.keys(settings).map((setting) => {
-                if(setting == "Logout"){
-                  if(session){
-                    return(
-                      <MenuItem key={setting} onClick={() => {
-                        signOut();
-                        handleCloseUserMenu();
-                      }}>
-                        <Typography textAlign="center">{setting}</Typography>
-                      </MenuItem>
-                    );
-                  }else{
-                    return null;
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {Object.keys(settings).map((setting) => {
+                  if (setting == 'Logout') {
+                    if (session) {
+                      return (
+                        <MenuItem
+                          key={setting}
+                          onClick={() => {
+                            signOut();
+                            handleCloseUserMenu();
+                          }}
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      );
+                    } else {
+                      return null;
+                    }
                   }
-                }
-                return (
-                  <MenuItem key={setting} onClick={() => {
-                    handleCloseUserMenu();
-                  }}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-              )})}
-            </Menu>
-          </Box>
-          :
-          <Box>
-            <Button onClick={() => signIn()}>Login</Button>
-          </Box>
-          }
+                  return (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => {
+                        handleCloseUserMenu();
+                      }}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  );
+                })}
+              </Menu>
+            </Box>
+          ) : (
+            <Box>
+              <Button onClick={() => signIn()}>Login</Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
-
