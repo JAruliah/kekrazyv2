@@ -42,13 +42,13 @@ const gameStateActions = (set: any, get: any) => {
           }, 1000);
         }
         set((state: any) => ({ gameTimer: state.gameTimer - 1 }));
-        gameTimerCopy--;
         // if the timer reaches 0 clear the interval
         if (gameTimerCopy == 0 || raceFinished) {
           set(() => ({ raceFinished: true }));
           set(() => ({ raceStarted: false }));
           clearInterval(gameTime);
         }
+        gameTimerCopy--;
       }, 1000);
     },
 

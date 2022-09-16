@@ -27,11 +27,10 @@ const solorace: React.FC<soloraceProps> = (props) => {
     const startCountDownTimer = setInterval(() => {
       count += 1;
       setStartCountDown((prevState) => {
-        // if 0 start game and clear interval
+        // if 0 clear interval
         if (prevState == 0) {
           clearInterval(startCountDownTimer);
-          setStartCountDown(START_COUNTDOWN_TIMER);
-          return prevState;
+          return START_COUNTDOWN_TIMER;
         }
         // keep counting down if not 0
         else {
@@ -48,6 +47,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
 
   // when playing a new game we must reset values and get a new quote
   const playAgain = async () => {
+    console.log(START_COUNTDOWN_TIMER);
     const response = await axios.get(
       `https://api.quotable.io/random?minLength=${QUOTE_LENGTH}`
     );
@@ -59,8 +59,12 @@ const solorace: React.FC<soloraceProps> = (props) => {
     <>
       {countDownStarted == true && (
         <Grid container justifyContent={'center'} mb={4}>
-          <Grid item>
-            <Typography variant="h5">
+          <Grid
+            item
+            md={6}
+            style={{ borderBottom: '1px solid #a1a1a1', padding: '5px' }}
+          >
+            <Typography variant="h5" textAlign={'center'}>
               Starting in: <span>{startCountDown}</span>
             </Typography>
           </Grid>

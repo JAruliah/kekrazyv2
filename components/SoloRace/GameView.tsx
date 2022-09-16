@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useGameStore from '../../store';
 import { GameHeader } from './GameHeader';
+import Grid from '@mui/material/Grid';
 import styles from '../../styles/SoloRace.module.css';
+import TextField from '@mui/material/TextField';
 interface GameViewProps {}
 
 export const GameView: React.FC<GameViewProps> = ({}) => {
@@ -46,7 +48,9 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
   };
 
   // handle changes in input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     let currentWordArray = quoteMap[`${wordArray[currentWord]}`];
     let currentWordString = wordArray[currentWord] + ' ';
     let inputFieldLength = e.target.value.length;
@@ -150,31 +154,40 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
 
   return (
     <>
-      <GameHeader />
-      <div className="row justify-content-center mb-4">
-        <div
+      {raceStarted || raceFinished ? <GameHeader /> : null}
+      <Grid container justifyContent={'center'} mb={5}>
+        <Grid
+          item
+          md={6}
           className={
+            raceFinished ? `${styles.gameWords}` : `${styles.gameWords}`
+          }
+          style={
             raceFinished
-              ? `col-md-6 bg-secondary ${styles.gameWords}`
-              : `col-md-6 ${styles.gameWords}`
+              ? { backgroundColor: '#a1a1a1' }
+              : { backgroundColor: 'none' }
           }
         >
           {renderWords()}
-        </div>
-      </div>
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <input
-            className="form-control"
+        </Grid>
+      </Grid>
+      <Grid container justifyContent={'center'}>
+        <Grid item xs={10} md={6}>
+          <TextField
             onChange={(e) => handleChange(e)}
-            ref={inputRef}
+            fullWidth
+            autoComplete="off"
+            id="outlined-basic"
+            variant="outlined"
+            size="small"
+            inputRef={inputRef}
             value={inputValue}
             disabled={
               raceFinished == true || raceStarted == false ? true : false
             }
           />
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 };
