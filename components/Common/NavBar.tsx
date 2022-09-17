@@ -54,10 +54,10 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: '#041424' }}>
+    <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Link href="/">
             <Typography
               variant="h6"
@@ -70,7 +70,6 @@ export const NavBar = () => {
                 fontFamily: 'arial',
                 fontWeight: 700,
                 letterSpacing: '',
-                color: 'inherit',
                 textDecoration: 'none',
               }}
             >
@@ -116,7 +115,7 @@ export const NavBar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Link href="/">
             <Typography
               variant="h5"
@@ -130,7 +129,6 @@ export const NavBar = () => {
                 fontFamily: 'arial',
                 fontWeight: 700,
                 letterSpacing: '',
-                color: 'inherit',
                 textDecoration: 'none',
               }}
             >
@@ -140,12 +138,11 @@ export const NavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {Object.keys(pages).map((page) => (
               <Link href={pages[page]} key={page}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
+                <a onClick={handleCloseNavMenu}>
+                  <Typography variant="body1" mr={1}>
+                    {page}
+                  </Typography>
+                </a>
               </Link>
             ))}
           </Box>
@@ -206,7 +203,13 @@ export const NavBar = () => {
             </Box>
           ) : (
             <Box>
-              <Button onClick={() => signIn()}>Login</Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => signIn()}
+              >
+                Login
+              </Button>
             </Box>
           )}
         </Toolbar>

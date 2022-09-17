@@ -4,6 +4,7 @@ import { GameHeader } from './GameHeader';
 import Grid from '@mui/material/Grid';
 import styles from '../../styles/SoloRace.module.css';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 interface GameViewProps {}
 
 export const GameView: React.FC<GameViewProps> = ({}) => {
@@ -125,17 +126,29 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       return quoteMap[word].map((letter: string, i: number) => {
         currentLetterIndex++;
         return (
-          <span
+          <Box
+            component={'span'}
             key={currentLetterIndex - 1}
+            color={
+              pointerIndex > currentLetterIndex - 1 &&
+              (firstIncorrectIndex == null ||
+                currentLetterIndex - 1 < firstIncorrectIndex)
+                ? 'success.main'
+                : firstIncorrectIndex != null &&
+                  currentLetterIndex - 1 < pointerIndex &&
+                  currentLetterIndex - 1 >= firstIncorrectIndex
+                ? 'error.main'
+                : ''
+            }
             className={
               pointerIndex > currentLetterIndex - 1 &&
               (firstIncorrectIndex == null ||
                 currentLetterIndex - 1 < firstIncorrectIndex)
-                ? 'text-success'
+                ? 'success'
                 : firstIncorrectIndex != null &&
                   currentLetterIndex - 1 < pointerIndex &&
                   currentLetterIndex - 1 >= firstIncorrectIndex
-                ? 'text-danger'
+                ? 'error'
                 : currentLetterIndex - 1 == pointerIndex
                 ? `${styles.currentLetterCursor}`
                 : ''
@@ -146,7 +159,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
               // if this is the current word underline it
               currentWord == index ? <u>{letter}</u> : letter
             }
-          </span>
+          </Box>
         );
       });
     });

@@ -47,7 +47,6 @@ const solorace: React.FC<soloraceProps> = (props) => {
 
   // when playing a new game we must reset values and get a new quote
   const playAgain = async () => {
-    console.log(START_COUNTDOWN_TIMER);
     const response = await axios.get(
       `https://api.quotable.io/random?minLength=${QUOTE_LENGTH}`
     );
