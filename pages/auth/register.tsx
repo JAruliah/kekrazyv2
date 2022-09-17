@@ -3,6 +3,11 @@ import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 
 const register = () => {
   const router = useRouter();
@@ -50,89 +55,116 @@ const register = () => {
   return (
     <Box>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <h3>Register</h3>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Typography variant="h4">Register</Typography>
+        </Grid>
         {errorMessage.length > 0 ? (
-          <div
-            className="alert alert-warning mt-2"
-            style={{ marginBottom: '0' }}
-            role="alert"
-          >
-            {errorMessage}
-          </div>
+          <Grid container justifyContent={'center'} mb={2}>
+            <Grid item xs={12} md={6}>
+              <Alert severity="warning">{errorMessage}</Alert>
+            </Grid>
+          </Grid>
         ) : null}
-        <label>First Name</label>
-        <input
-          className="form-control"
-          value={registerForm.firstName}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, firstName: e.target.value })
-          }
-          required={true}
-        />
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item md={6}>
+            <TextField
+              label="First Name"
+              type="text"
+              fullWidth
+              value={registerForm.firstName}
+              onChange={(e) =>
+                setRegisterForm({ ...registerForm, firstName: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
 
-        <label>Last Name</label>
-        <input
-          className="form-control"
-          value={registerForm.lastName}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, lastName: e.target.value })
-          }
-          required={true}
-        />
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Last Name"
+              type="text"
+              fullWidth
+              value={registerForm.lastName}
+              onChange={(e) =>
+                setRegisterForm({ ...registerForm, lastName: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
 
-        <label>Email</label>
-        <input
-          className="form-control"
-          type="email"
-          value={registerForm.email}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, email: e.target.value })
-          }
-          required={true}
-        />
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Email"
+              type="email"
+              fullWidth
+              value={registerForm.email}
+              onChange={(e) =>
+                setRegisterForm({ ...registerForm, email: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Username"
+              type="text"
+              fullWidth
+              value={registerForm.username}
+              onChange={(e) =>
+                setRegisterForm({ ...registerForm, username: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              value={registerForm.password}
+              onChange={(e) =>
+                setRegisterForm({ ...registerForm, password: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="Confirm Password"
+              type="password"
+              fullWidth
+              value={registerForm.confirmPassword}
+              onChange={(e) =>
+                setRegisterForm({
+                  ...registerForm,
+                  confirmPassword: e.target.value,
+                })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
 
-        <label>Username</label>
-        <input
-          className="form-control"
-          value={registerForm.username}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, username: e.target.value })
-          }
-          required={true}
-        />
-
-        <label>Password</label>
-        <input
-          className="form-control"
-          type="password"
-          value={registerForm.password}
-          onChange={(e) =>
-            setRegisterForm({ ...registerForm, password: e.target.value })
-          }
-          required={true}
-        />
-
-        <label>Confirm Password</label>
-        <input
-          className="form-control"
-          type="password"
-          value={registerForm.confirmPassword}
-          onChange={(e) =>
-            setRegisterForm({
-              ...registerForm,
-              confirmPassword: e.target.value,
-            })
-          }
-          required={true}
-        />
-
-        <button
-          className="btn btn-primary mt-2"
-          type="submit"
-          disabled={loading}
-        >
-          Register
-        </button>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Button
+            type="submit"
+            disabled={loading}
+            variant="contained"
+            color="secondary"
+          >
+            Register
+          </Button>
+        </Grid>
       </form>
     </Box>
   );

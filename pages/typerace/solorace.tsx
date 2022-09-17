@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useGameStore from '../../store';
+import useGameStore from '../../stores/GameStore';
 import axios from 'axios';
 import { Quote } from '../../interfaces/SoloRace';
 import { GameView } from '../../components/SoloRace/GameView';
@@ -80,7 +80,11 @@ const solorace: React.FC<soloraceProps> = (props) => {
             </Grid>
             <Grid container justifyContent={'center'}>
               <Grid item>
-                <Button variant="contained" onClick={() => startRace()}>
+                <Button
+                  variant="contained"
+                  onClick={() => startRace()}
+                  color="secondary"
+                >
                   Start
                 </Button>
               </Grid>
@@ -96,6 +100,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
               onClick={() => {
                 playAgain();
               }}
+              color="secondary"
             >
               Play again
             </Button>

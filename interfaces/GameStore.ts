@@ -1,7 +1,6 @@
-import { StateCreator } from 'zustand';
 import { Quote } from './SoloRace';
 
-export interface gameState {
+export interface GameState {
   raceStarted: boolean;
   raceFinished: boolean;
   quote: Quote;

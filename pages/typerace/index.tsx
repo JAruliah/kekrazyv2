@@ -28,7 +28,9 @@ const index: React.FC = () => {
             </CardContent>
             <CardActions>
               <Link href={'/typerace/solorace'}>
-                <Button variant="contained">Play</Button>
+                <Button variant="contained" color="secondary">
+                  Play
+                </Button>
               </Link>
             </CardActions>
           </Grid>

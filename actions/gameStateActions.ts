@@ -1,7 +1,7 @@
 import { GAME_TIMER } from '../constantVariables';
-import { initialState } from '../store';
+import { initialState } from '../stores/GameStore';
 
-const gameStateActions = (set: any, get: any) => {
+const GameStateActions = (set: any, get: any) => {
   return {
     // set state
     setGameState: (input: any) => {
@@ -62,4 +62,4 @@ const gameStateActions = (set: any, get: any) => {
     },
   };
 };
-export default gameStateActions;
+export default GameStateActions;

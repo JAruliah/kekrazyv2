@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useGameStore from '../../store';
+import useGameStore from '../../stores/GameStore';
 import { GameHeader } from './GameHeader';
 import Grid from '@mui/material/Grid';
 import styles from '../../styles/SoloRace.module.css';
@@ -175,11 +175,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
           className={
             raceFinished ? `${styles.gameWords}` : `${styles.gameWords}`
           }
-          style={
-            raceFinished
-              ? { backgroundColor: '#a1a1a1' }
-              : { backgroundColor: 'none' }
-          }
+          sx={raceFinished ? { bgcolor: 'secondary.main' } : {}}
         >
           {renderWords()}
         </Grid>

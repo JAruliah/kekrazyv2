@@ -1,9 +1,9 @@
 import create from 'zustand';
-import { Store, gameState } from './interfaces/Store';
-import { GAME_TIMER } from './constantVariables';
-import gameStateActions from './actions/gameStateActions';
+import { Store, GameState } from '../interfaces/GameStore';
+import { GAME_TIMER } from '../constantVariables';
+import GameStateActions from '../actions/GameStateActions';
 
-export const initialState: gameState = {
+export const initialState: GameState = {
   raceStarted: false,
   raceFinished: false,
   quote: { content: '', author: '', tags: [] },
@@ -22,7 +22,7 @@ export const initialState: gameState = {
 
 const useGameStore = create<Store>((set: any, get: any) => ({
   ...initialState,
-  actions: gameStateActions(set, get),
+  actions: GameStateActions(set, get),
 }));
 
 export default useGameStore;

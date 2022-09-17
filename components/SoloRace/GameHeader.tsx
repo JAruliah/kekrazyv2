@@ -1,5 +1,5 @@
 import React from 'react';
-import useGameStore from '../../store';
+import useGameStore from '../../stores/GameStore';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 interface GameHeaderProps {}

@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 
 const signin = ({}) => {
   const router = useRouter();
@@ -35,47 +39,61 @@ const signin = ({}) => {
   };
   return (
     <Box>
-      <Typography variant="h4">Sign in</Typography>
+      <Grid container justifyContent={'center'} mb={2}>
+        <Typography variant="h4">Sign in</Typography>
+      </Grid>
       {errorMessage.length > 0 ? (
-        <div
-          className="alert alert-warning mt-2"
-          style={{ marginBottom: '0' }}
-          role="alert"
-        >
-          {errorMessage}
-        </div>
+        <Grid container mb={2} justifyContent={'center'}>
+          <Grid item xs={12} md={6}>
+            <Alert severity="warning">{errorMessage}</Alert>
+          </Grid>
+        </Grid>
       ) : null}
       <form onSubmit={(e) => validateSignin(e)}>
-        <label>Username</label>
-        <input
-          name="username"
-          type="text"
-          className="form-control"
-          value={loginForm.username}
-          onChange={(e) =>
-            setLoginForm({ ...loginForm, username: e.target.value })
-          }
-          required={true}
-        />
-        <label>Password</label>
-        <input
-          name="password"
-          type="password"
-          className="form-control"
-          value={loginForm.password}
-          onChange={(e) =>
-            setLoginForm({ ...loginForm, password: e.target.value })
-          }
-          required={true}
-        />
-        <Link href={'/auth/register'}>
-          <a style={{ display: 'block' }}>
-            Dont have an account? Register here!
-          </a>
-        </Link>
-        <button type="submit" className="btn btn-primary mt-2">
-          Sign in
-        </button>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Username"
+              name="username"
+              type="text"
+              value={loginForm.username}
+              onChange={(e) =>
+                setLoginForm({ ...loginForm, username: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              label="Password"
+              name="password"
+              type="password"
+              value={loginForm.password}
+              onChange={(e) =>
+                setLoginForm({ ...loginForm, password: e.target.value })
+              }
+              required={true}
+            />
+          </Grid>
+        </Grid>
+        <Grid container justifyContent={'center'} mb={2}>
+          <Link href={'/auth/register'}>
+            <a>
+              <Typography variant="body1">
+                Don't have an account? Register here
+              </Typography>
+            </a>
+          </Link>
+        </Grid>
+        <Grid container justifyContent={'center'}>
+          <Button type="submit" variant="contained" color="secondary">
+            Sign in
+          </Button>
+        </Grid>
       </form>
     </Box>
   );
