@@ -15,6 +15,8 @@ export interface GameState {
   incorrectInputs: number;
   wpmScore: number;
   accuracyScore: number;
+  startedAt: Date;
+  mode: 'solo' | 'multiplayer';
 }
 
 export interface Actions {
@@ -39,4 +41,6 @@ export interface Store {
   wpmScore: number;
   accuracyScore: number;
   actions: any;
+  startedAt: Date;
+  mode: 'solo' | 'multiplayer';
 }

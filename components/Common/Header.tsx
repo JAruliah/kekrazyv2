@@ -66,16 +66,16 @@ export const Header = () => {
   };
 
   return (
-    <AppBar position="static" color="primary" enableColorOnDark>
+    <AppBar position='static' color='primary' enableColorOnDark>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Link href="/">
+          <Link href='/'>
             <Typography
-              variant="h6"
+              variant='h6'
               noWrap
-              component="a"
-              href=""
+              component='a'
+              href=''
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -91,17 +91,17 @@ export const Header = () => {
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+              size='large'
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color='inherit'
             >
               <MenuIcon />
             </IconButton>
             <Menu
-              id="menu-appbar"
+              id='menu-appbar'
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -121,19 +121,19 @@ export const Header = () => {
               {Object.keys(pages).map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Link href={pages[page]}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Typography textAlign='center'>{page}</Typography>
                   </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Link href="/">
+          <Link href='/'>
             <Typography
-              variant="h5"
+              variant='h5'
               noWrap
-              component="a"
-              href=""
+              component='a'
+              href=''
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
@@ -152,7 +152,7 @@ export const Header = () => {
             {Object.keys(pages).map((page) => (
               <Link href={pages[page]} key={page}>
                 <a onClick={handleCloseNavMenu}>
-                  <Typography variant="body1" mr={1}>
+                  <Typography variant='body1' mr={1}>
                     {page}
                   </Typography>
                 </a>
@@ -165,7 +165,7 @@ export const Header = () => {
               <IconButton
                 sx={{ ml: 1 }}
                 onClick={toggleThemeMode}
-                color="inherit"
+                color='inherit'
               >
                 {themeMode === 'dark' ? (
                   <Brightness7Icon />
@@ -178,14 +178,14 @@ export const Header = () => {
 
           {session ? (
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title='Open settings'>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <PersonIcon fontSize="large" />
+                  <PersonIcon fontSize='large' />
                 </IconButton>
               </Tooltip>
               <Menu
                 sx={{ mt: '45px' }}
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorElUser}
                 anchorOrigin={{
                   vertical: 'top',
@@ -210,7 +210,7 @@ export const Header = () => {
                             handleCloseUserMenu();
                           }}
                         >
-                          <Typography textAlign="center">{setting}</Typography>
+                          <Typography textAlign='center'>{setting}</Typography>
                         </MenuItem>
                       );
                     } else {
@@ -219,8 +219,8 @@ export const Header = () => {
                   }
                   if (setting == 'mode') {
                     return (
-                      <MenuItem>
-                        <IconButton onClick={toggleThemeMode} color="inherit">
+                      <MenuItem key={setting}>
+                        <IconButton onClick={toggleThemeMode} color='inherit'>
                           {themeMode === 'dark' ? (
                             <Brightness7Icon />
                           ) : (
@@ -237,7 +237,7 @@ export const Header = () => {
                         handleCloseUserMenu();
                       }}
                     >
-                      <Typography textAlign="center">{setting}</Typography>
+                      <Typography textAlign='center'>{setting}</Typography>
                     </MenuItem>
                   );
                 })}
@@ -246,8 +246,8 @@ export const Header = () => {
           ) : (
             <Box>
               <Button
-                color="secondary"
-                variant="contained"
+                color='secondary'
+                variant='contained'
                 onClick={() => signIn()}
               >
                 Login

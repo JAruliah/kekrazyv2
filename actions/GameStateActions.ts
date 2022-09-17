@@ -1,5 +1,6 @@
 import { GAME_TIMER } from '../constantVariables';
 import { initialState } from '../stores/GameStore';
+import axios from 'axios';
 
 const GameStateActions = (set: any, get: any) => {
   return {
@@ -9,7 +10,7 @@ const GameStateActions = (set: any, get: any) => {
     },
 
     // start the game timer
-    startGameTimer: () => {
+    startGameTimer: (session: any) => {
       let scoreCalculateInterval: NodeJS.Timer;
       // get the state
       const gameTimer = get().gameTimer;
@@ -47,6 +48,10 @@ const GameStateActions = (set: any, get: any) => {
           set(() => ({ raceFinished: true }));
           set(() => ({ raceStarted: false }));
           clearInterval(gameTime);
+          if (session) {
+            const afterGameState = get();
+            saveMatchStats(afterGameState);
+          }
         }
         gameTimerCopy--;
       }, 1000);
@@ -57,9 +62,32 @@ const GameStateActions = (set: any, get: any) => {
       set({ ...initialState, quote: quote });
     },
 
+    // reset the game state
     resetGameState: () => {
       set(initialState);
     },
   };
 };
 export default GameStateActions;
+// save match stats to the database
+const saveMatchStats = async (gameState: any) => {
+  const { wpmScore, accuracyScore, startedAt, quote, mode } = gameState;
+  const endedAt = new Date();
+  const { author, content, length, tags } = quote;
+  const timeTaken = Math.floor(
+    (endedAt.getTime() - startedAt.getTime()) / 1000
+  );
+  const matchStats = {
+    wpmScore,
+    accuracyScore,
+    author,
+    content,
+    startedAt,
+    endedAt,
+    length,
+    tags,
+    mode,
+    timeTaken,
+  };
+  await axios.post('/api/saveMatchHistory', matchStats);
+};

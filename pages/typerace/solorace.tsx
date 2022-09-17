@@ -7,11 +7,13 @@ import { START_COUNTDOWN_TIMER, QUOTE_LENGTH } from '../../constantVariables';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import { useSession } from 'next-auth/react';
 interface soloraceProps {
   quote: Quote;
 }
 
 const solorace: React.FC<soloraceProps> = (props) => {
+  const { data: session } = useSession();
   const { raceStarted, raceFinished, actions } = useGameStore();
   const [startCountDown, setStartCountDown] = useState(START_COUNTDOWN_TIMER);
   const [countDownStarted, setCountDownStarted] = useState(false);
@@ -40,7 +42,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
       if (count == START_COUNTDOWN_TIMER) {
         setCountDownStarted(false);
         actions.setGameState({ raceStarted: true, raceFinished: false });
-        actions.startGameTimer();
+        actions.startGameTimer(session);
       }
     }, 1000);
   };
@@ -48,7 +50,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
   // when playing a new game we must reset values and get a new quote
   const playAgain = async () => {
     const response = await axios.get(
-      `https://api.quotable.io/random?minLength=${QUOTE_LENGTH}`
+      `https://api.quotable.io/random?maxLength=${QUOTE_LENGTH}`
     );
     await actions.playAgain(response.data);
     startRace();
@@ -63,7 +65,7 @@ const solorace: React.FC<soloraceProps> = (props) => {
             md={6}
             style={{ borderBottom: '1px solid #a1a1a1', padding: '5px' }}
           >
-            <Typography variant="h5" textAlign={'center'}>
+            <Typography variant='h5' textAlign={'center'}>
               Starting in: <span>{startCountDown}</span>
             </Typography>
           </Grid>
@@ -75,15 +77,15 @@ const solorace: React.FC<soloraceProps> = (props) => {
           <>
             <Grid container justifyContent={'center'} mb={2}>
               <Grid item>
-                <Typography variant="h5">Click when ready to start</Typography>
+                <Typography variant='h5'>Click when ready to start</Typography>
               </Grid>
             </Grid>
             <Grid container justifyContent={'center'}>
               <Grid item>
                 <Button
-                  variant="contained"
+                  variant='contained'
                   onClick={() => startRace()}
-                  color="secondary"
+                  color='secondary'
                 >
                   Start
                 </Button>
@@ -96,11 +98,11 @@ const solorace: React.FC<soloraceProps> = (props) => {
         <Grid container justifyContent={'center'} mt={2}>
           <Grid item>
             <Button
-              variant="contained"
+              variant='contained'
               onClick={() => {
                 playAgain();
               }}
-              color="secondary"
+              color='secondary'
             >
               Play again
             </Button>
