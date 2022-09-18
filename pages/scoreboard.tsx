@@ -1,9 +1,52 @@
 import React from 'react';
 import axios from 'axios';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
-const scoreboard = (props: any) => {
-  console.log(props);
-  return <div>scoreboard</div>;
+interface scoreboardProps {
+  scoreboard: {
+    username: string;
+    wpm: number;
+    accuracy: number;
+    totalMatches: number;
+  }[];
+}
+
+const scoreboard = (props: scoreboardProps) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <TableHead>
+          <TableRow>
+            <TableCell>Username</TableCell>
+            <TableCell align='right'>WPM</TableCell>
+            <TableCell align='right'>Accuracy</TableCell>
+            <TableCell align='right'>Total Matches</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.scoreboard.map((row) => (
+            <TableRow
+              key={row.username}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component='th' scope='row'>
+                {row.username}
+              </TableCell>
+              <TableCell align='right'>{row.wpm}</TableCell>
+              <TableCell align='right'>{row.accuracy}</TableCell>
+              <TableCell align='right'>{row.totalMatches}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 };
 
 export async function getServerSideProps() {

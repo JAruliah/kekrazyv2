@@ -25,6 +25,7 @@ import { useRouter } from 'next/router';
 const pages: any = {
   Home: '/',
   'Type!': '/typerace',
+  Scoreboard: '/scoreboard',
 };
 const settings: any = {
   Profile: '#',

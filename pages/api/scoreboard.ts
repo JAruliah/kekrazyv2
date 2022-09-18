@@ -7,13 +7,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const data = await prisma.$queryRaw`
         SELECT 
-          AVG(M.WPM) as WPM,
-          AVG(M.accuracy) as Accuracy,
-          COUNT(M.id) as TotalMatches,
+          AVG(M.WPM) as wpm,
+          AVG(M.accuracy) as accuracy,
+          COUNT(M.id) as totalMatches,
           U.username
         FROM Matches M
         INNER JOIN User U ON U.id = M.userId
         GROUP BY M.userId
+        ORDER BY WPM DESC
       `;
       const updatedData = JSON.stringify(data, (_, v) =>
         typeof v === 'bigint' ? v.toString() : v
