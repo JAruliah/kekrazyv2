@@ -27,6 +27,11 @@ export default NextAuth({
                 lastName: true,
                 image: true,
                 password: true,
+                settings: {
+                  select: {
+                    theme: true,
+                  },
+                },
               },
               where: {
                 username: credentials.username,
@@ -45,6 +50,7 @@ export default NextAuth({
                   firstName: userObj.firstName,
                   lastName: userObj.lastName,
                   image: userObj.image,
+                  settings: userObj.settings,
                 };
               }
             }

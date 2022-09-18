@@ -5,6 +5,16 @@ import prisma from '../../prisma/prismaClient';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
+      // const data2 = await prisma.matches.groupBy({
+      //   by:['userId'],
+      //   _avg:{
+      //     WPM: true,
+      //     accuracy: true,
+      //   },
+      //   _count: {
+      //     id: true
+      //   }
+      // });
       const data = await prisma.$queryRaw`
         SELECT 
           AVG(M.WPM) as wpm,

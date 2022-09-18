@@ -22,6 +22,11 @@ declare module 'next-auth' {
     lastName: String;
     email: String;
     image: String;
+    settings: Settings;
+  }
+
+  interface Settings {
+    theme: String;
   }
 
   interface Session {

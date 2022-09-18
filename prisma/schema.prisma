@@ -49,6 +49,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   matches       Matches[]
+  settings      Settings?
 }
 
 model VerificationToken {
@@ -70,4 +71,11 @@ model Matches {
   completionTime Int
   mode      String
   quoteLength Int
+}
+
+model Settings {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme     String
 }

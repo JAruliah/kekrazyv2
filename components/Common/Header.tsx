@@ -20,6 +20,7 @@ import useGeneralStore from '../../stores/GeneralStore';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 // const pages = ['Home', 'Type!',];
 const pages: any = {
@@ -30,6 +31,7 @@ const pages: any = {
 const settings: any = {
   Profile: '#',
   Logout: '',
+  Settings: 'settings',
   mode: '',
 };
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -60,10 +62,20 @@ export const Header = () => {
     setAnchorElUser(null);
   };
 
-  const toggleThemeMode = () => {
+  const toggleThemeMode = async () => {
     useGeneralStore.setState({
       themeMode: themeMode === 'light' ? 'dark' : 'light',
     });
+    if (session) {
+      try {
+        const res = await axios.post('/api/saveSettings', {
+          userId: session.user.id,
+          theme: themeMode === 'light' ? 'dark' : 'light',
+        });
+      } catch (e: any) {
+        console.log(e.message);
+      }
+    }
   };
 
   return (
@@ -218,6 +230,20 @@ export const Header = () => {
                       return null;
                     }
                   }
+                  if (setting == 'Settings') {
+                    return (
+                      <MenuItem
+                        key={setting}
+                        onClick={() => {
+                          handleCloseUserMenu();
+                        }}
+                      >
+                        <Link href={`${settings.Settings}/${session.user.id}`}>
+                          <Typography textAlign='center'>{setting}</Typography>
+                        </Link>
+                      </MenuItem>
+                    );
+                  }
                   if (setting == 'mode') {
                     return (
                       <MenuItem key={setting}>
@@ -231,16 +257,6 @@ export const Header = () => {
                       </MenuItem>
                     );
                   }
-                  return (
-                    <MenuItem
-                      key={setting}
-                      onClick={() => {
-                        handleCloseUserMenu();
-                      }}
-                    >
-                      <Typography textAlign='center'>{setting}</Typography>
-                    </MenuItem>
-                  );
                 })}
               </Menu>
             </Box>
