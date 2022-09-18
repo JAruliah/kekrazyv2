@@ -30,6 +30,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     formatGameQuote();
     if (raceStarted) {
       inputRef.current?.focus();
+      actions.setGameState({ startedAt: new Date(), mode: 'solo' });
     }
   }, [raceStarted]);
 
@@ -185,10 +186,10 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
           <TextField
             onChange={(e) => handleChange(e)}
             fullWidth
-            autoComplete="off"
-            id="outlined-basic"
-            variant="outlined"
-            size="small"
+            autoComplete='off'
+            id='outlined-basic'
+            variant='outlined'
+            size='small'
             inputRef={inputRef}
             value={inputValue}
             disabled={

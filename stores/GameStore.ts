@@ -18,6 +18,8 @@ export const initialState: GameState = {
   incorrectInputs: 0,
   wpmScore: 0,
   accuracyScore: 0,
+  startedAt: new Date(),
+  mode: 'solo',
 };
 
 const useGameStore = create<Store>((set: any, get: any) => ({
