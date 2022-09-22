@@ -1,7 +1,14 @@
 .gameWords {
   font-size: 20px;
 }
-.currentLetterCursor {
+.currentLetterCursorLight {
+  width: 1px;
+  border-left: 0.5px solid white;
+  animation-name: currentLetterCursor;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+.currentLetterCursorDark {
   width: 1px;
   border-left: 0.5px solid black;
   animation-name: currentLetterCursor;

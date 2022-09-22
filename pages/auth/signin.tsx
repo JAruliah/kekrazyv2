@@ -40,12 +40,12 @@ const signin = ({}) => {
   return (
     <Box>
       <Grid container justifyContent={'center'} mb={2}>
-        <Typography variant="h4">Sign in</Typography>
+        <Typography variant='h4'>Sign in</Typography>
       </Grid>
       {errorMessage.length > 0 ? (
         <Grid container mb={2} justifyContent={'center'}>
           <Grid item xs={12} md={6}>
-            <Alert severity="warning">{errorMessage}</Alert>
+            <Alert severity='warning'>{errorMessage}</Alert>
           </Grid>
         </Grid>
       ) : null}
@@ -54,9 +54,9 @@ const signin = ({}) => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Username"
-              name="username"
-              type="text"
+              label='Username'
+              name='username'
+              type='text'
               value={loginForm.username}
               onChange={(e) =>
                 setLoginForm({ ...loginForm, username: e.target.value })
@@ -69,9 +69,9 @@ const signin = ({}) => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Password"
-              name="password"
-              type="password"
+              label='Password'
+              name='password'
+              type='password'
               value={loginForm.password}
               onChange={(e) =>
                 setLoginForm({ ...loginForm, password: e.target.value })
@@ -83,14 +83,14 @@ const signin = ({}) => {
         <Grid container justifyContent={'center'} mb={2}>
           <Link href={'/auth/register'}>
             <a>
-              <Typography variant="body1">
+              <Typography variant='body1'>
                 Don't have an account? Register here
               </Typography>
             </a>
           </Link>
         </Grid>
         <Grid container justifyContent={'center'}>
-          <Button type="submit" variant="contained" color="secondary">
+          <Button type='submit' variant='contained' color='secondary'>
             Sign in
           </Button>
         </Grid>

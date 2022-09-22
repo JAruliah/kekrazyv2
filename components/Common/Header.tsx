@@ -19,7 +19,6 @@ import useGeneralStore from '../../stores/GeneralStore';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 
 // const pages = ['Home', 'Type!',];
 const pages: any = {
@@ -62,19 +61,10 @@ export const Header = () => {
   };
 
   const toggleThemeMode = async () => {
+    localStorage.setItem('themeMode', themeMode === 'dark' ? 'light' : 'dark');
     useGeneralStore.setState({
       themeMode: themeMode === 'light' ? 'dark' : 'light',
     });
-    if (session) {
-      try {
-        const res = await axios.post('/api/saveSettings', {
-          userId: session.user.id,
-          theme: themeMode === 'light' ? 'dark' : 'light',
-        });
-      } catch (e: any) {
-        console.log(e.message);
-      }
-    }
   };
 
   return (
@@ -237,7 +227,7 @@ export const Header = () => {
                           handleCloseUserMenu();
                         }}
                       >
-                        <Link href={`${settings.Settings}/${session.user.id}`}>
+                        <Link href={`${settings.Settings}/${session.user?.id}`}>
                           <Typography textAlign='center'>{setting}</Typography>
                         </Link>
                       </MenuItem>

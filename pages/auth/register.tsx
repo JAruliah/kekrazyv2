@@ -56,20 +56,20 @@ const register = () => {
     <Box>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Grid container justifyContent={'center'} mb={2}>
-          <Typography variant="h4">Register</Typography>
+          <Typography variant='h4'>Register</Typography>
         </Grid>
         {errorMessage.length > 0 ? (
           <Grid container justifyContent={'center'} mb={2}>
             <Grid item xs={12} md={6}>
-              <Alert severity="warning">{errorMessage}</Alert>
+              <Alert severity='warning'>{errorMessage}</Alert>
             </Grid>
           </Grid>
         ) : null}
         <Grid container justifyContent={'center'} mb={2}>
-          <Grid item md={6}>
+          <Grid item xs={12} md={6}>
             <TextField
-              label="First Name"
-              type="text"
+              label='First Name'
+              type='text'
               fullWidth
               value={registerForm.firstName}
               onChange={(e) =>
@@ -83,8 +83,8 @@ const register = () => {
         <Grid container justifyContent={'center'} mb={2}>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Last Name"
-              type="text"
+              label='Last Name'
+              type='text'
               fullWidth
               value={registerForm.lastName}
               onChange={(e) =>
@@ -98,8 +98,8 @@ const register = () => {
         <Grid container justifyContent={'center'} mb={2}>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Email"
-              type="email"
+              label='Email'
+              type='email'
               fullWidth
               value={registerForm.email}
               onChange={(e) =>
@@ -112,8 +112,8 @@ const register = () => {
         <Grid container justifyContent={'center'} mb={2}>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Username"
-              type="text"
+              label='Username'
+              type='text'
               fullWidth
               value={registerForm.username}
               onChange={(e) =>
@@ -126,8 +126,8 @@ const register = () => {
         <Grid container justifyContent={'center'} mb={2}>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Password"
-              type="password"
+              label='Password'
+              type='password'
               fullWidth
               value={registerForm.password}
               onChange={(e) =>
@@ -140,8 +140,8 @@ const register = () => {
         <Grid container justifyContent={'center'} mb={2}>
           <Grid item xs={12} md={6}>
             <TextField
-              label="Confirm Password"
-              type="password"
+              label='Confirm Password'
+              type='password'
               fullWidth
               value={registerForm.confirmPassword}
               onChange={(e) =>
@@ -157,10 +157,10 @@ const register = () => {
 
         <Grid container justifyContent={'center'} mb={2}>
           <Button
-            type="submit"
+            type='submit'
             disabled={loading}
-            variant="contained"
-            color="secondary"
+            variant='contained'
+            color='secondary'
           >
             Register
           </Button>

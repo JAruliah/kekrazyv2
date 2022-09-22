@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import prisma from '../../../prisma/prismaClient';
+import { prisma } from '../../../prisma/prismaClient';
 import bcrypt from 'bcrypt';
 // import login from '../login';
 export default NextAuth({
@@ -27,11 +27,6 @@ export default NextAuth({
                 lastName: true,
                 image: true,
                 password: true,
-                settings: {
-                  select: {
-                    theme: true,
-                  },
-                },
               },
               where: {
                 username: credentials.username,
@@ -50,7 +45,6 @@ export default NextAuth({
                   firstName: userObj.firstName,
                   lastName: userObj.lastName,
                   image: userObj.image,
-                  settings: userObj.settings,
                 };
               }
             }

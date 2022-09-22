@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       <Box>
         <Grid container>
           <Grid item xs={12} md={6}>
-            <Typography variant='h4'>Hi, {session.user.firstName}!</Typography>
+            <Typography variant='h4'>Hi, {session.user?.firstName}!</Typography>
           </Grid>
         </Grid>
       </Box>

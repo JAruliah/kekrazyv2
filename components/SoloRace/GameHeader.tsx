@@ -18,7 +18,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({}) => {
           <Grid item xs={12} md={4}>
             <Typography
               style={{ fontSize: '22px', width: 'fit-content', margin: 'auto' }}
-              variant="h5"
+              variant='h5'
             >
               Time Left: {gameTimer}
             </Typography>
@@ -26,7 +26,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({}) => {
           <Grid item xs={12} md={4}>
             <Typography
               style={{ fontSize: '22px', width: 'fit-content', margin: 'auto' }}
-              variant="h5"
+              variant='h5'
             >
               WPM: {wpmScore}
             </Typography>
@@ -34,7 +34,7 @@ export const GameHeader: React.FC<GameHeaderProps> = ({}) => {
           <Grid item xs={12} md={4}>
             <Typography
               style={{ fontSize: '22px', width: 'fit-content', margin: 'auto' }}
-              variant="h5"
+              variant='h5'
             >
               Accuracy: {accuracyScore >= 0 ? accuracyScore : 0}%
             </Typography>

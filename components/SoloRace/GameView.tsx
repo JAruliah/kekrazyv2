@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import styles from '../../styles/SoloRace.module.css';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import useGeneralStore from '../../stores/GeneralStore';
 interface GameViewProps {}
 
 export const GameView: React.FC<GameViewProps> = ({}) => {
@@ -23,7 +24,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     incorrectInputs,
     actions,
   } = useGameStore();
-
+  const { themeMode } = useGeneralStore();
   const inputRef = useRef<any>(null);
   // on mount, change status to race started and format the game quote
   useEffect(() => {
@@ -150,8 +151,10 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
                   currentLetterIndex - 1 < pointerIndex &&
                   currentLetterIndex - 1 >= firstIncorrectIndex
                 ? 'error'
-                : currentLetterIndex - 1 == pointerIndex
-                ? `${styles.currentLetterCursor}`
+                : currentLetterIndex - 1 == pointerIndex && themeMode == 'dark'
+                ? `${styles.currentLetterCursorLight}`
+                : currentLetterIndex - 1 == pointerIndex && themeMode == 'light'
+                ? `${styles.currentLetterCursorDark}`
                 : ''
             }
             id={`${currentLetterIndex - 1}`}
