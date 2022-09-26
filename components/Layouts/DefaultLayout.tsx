@@ -30,7 +30,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
     <Box className='content'>
       <Header />
       <br></br>
-      <Container maxWidth={false}>{children}</Container>
+      <Container maxWidth={'lg'}>{children}</Container>
     </Box>
   );
 };

@@ -69,7 +69,7 @@ export const Header = () => {
 
   return (
     <AppBar position='static' color='primary' enableColorOnDark>
-      <Container maxWidth={false}>
+      <Container maxWidth={'lg'}>
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Link href='/'>
