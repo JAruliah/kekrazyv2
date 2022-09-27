@@ -4,7 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { Matches } from '@prisma/client';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export const Stats = () => {
@@ -16,7 +15,7 @@ export const Stats = () => {
       };
       _count: number;
     };
-    matches: Matches[];
+    matches: any[];
   } | null>(null);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export const Stats = () => {
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} mb={4}>
       <Grid item xs={12} sm={4}>
         <Grid component={Card} style={{ height: '100%' }}>
           <CardContent>
