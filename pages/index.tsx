@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import axios from 'axios';
 import { Stats } from '../components/Home/Stats';
 import { Chart } from '../components/Home/Chart';
 import { History } from '../components/Home/History';
@@ -16,9 +17,8 @@ const Home = () => {
 
   useEffect(() => {
     const getChartData = async () => {
-      const response = await fetch('/api/matchHistory');
-      const data = await response.json();
-      setMatchHistory(data.matches);
+      const response = await axios.get('/api/matchHistory');
+      setMatchHistory(response.data.matches);
     };
     getChartData();
   }, []);
