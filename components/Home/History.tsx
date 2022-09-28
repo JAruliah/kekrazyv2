@@ -3,14 +3,33 @@ import Card from '@mui/material/Card';
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import { Matches } from '@prisma/client';
+interface HistoryProps {
+  matchHistory: Matches[];
+}
 
-export const History = ({ matchHistory }: any) => {
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+export const History = ({ matchHistory }: HistoryProps) => {
   return (
     <Grid item xs={12} mb={4} sx={{ overflowY: 'scroll', height: '300px' }}>
       {matchHistory
         ?.slice(0)
         .reverse()
-        .map((match: any) => {
+        .map((match) => {
           let date = new Date(match.createdAt);
           return (
             <Card sx={{ width: '100%', marginBottom: '5px' }} key={match.id}>
@@ -19,9 +38,10 @@ export const History = ({ matchHistory }: any) => {
                   <Grid item>
                     <Typography>
                       Played:{' '}
-                      {`${date.getFullYear()}/${
-                        date.getMonth() + 1
-                      }/${date.getDate()}`}
+                      {`${
+                        months[date.getMonth()]
+                      }/${date.getDate()}/${date.getFullYear()}
+                      `}
                     </Typography>
                   </Grid>
                   <Grid item>

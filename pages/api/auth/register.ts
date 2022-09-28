@@ -34,8 +34,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
     });
     // catch if any other error occurs
-  } catch (err: any) {
-    let message = 'oops something went wrong';
-    res.status(400).json({ error: true, message: message });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      let message = 'oops something went wrong';
+      res.status(400).json({ error: true, message: message });
+    }
   }
 };

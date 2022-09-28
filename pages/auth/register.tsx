@@ -129,6 +129,7 @@ const register = () => {
               label='Password'
               type='password'
               fullWidth
+              inputProps={{ minLength: 6 }}
               value={registerForm.password}
               onChange={(e) =>
                 setRegisterForm({ ...registerForm, password: e.target.value })
@@ -143,6 +144,7 @@ const register = () => {
               label='Confirm Password'
               type='password'
               fullWidth
+              inputProps={{ minLength: 6 }}
               value={registerForm.confirmPassword}
               onChange={(e) =>
                 setRegisterForm({

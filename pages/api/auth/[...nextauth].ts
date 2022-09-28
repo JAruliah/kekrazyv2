@@ -49,8 +49,10 @@ export default NextAuth({
               }
             }
           }
-        } catch (e: any) {
-          console.log(e.message);
+        } catch (e: unknown) {
+          if (e instanceof Error) {
+            console.log(e.message);
+          }
         }
         return null;
       },

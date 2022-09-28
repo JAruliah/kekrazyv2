@@ -8,10 +8,11 @@ import Box from '@mui/material/Box';
 import { Stats } from '../components/Home/Stats';
 import { Chart } from '../components/Home/Chart';
 import { History } from '../components/Home/History';
+import { Matches } from '@prisma/client';
 
 const Home = () => {
   const { data: session, status } = useSession();
-  const [matchHistory, setMatchHistory] = useState<any[]>([]);
+  const [matchHistory, setMatchHistory] = useState<Matches[]>([]);
 
   useEffect(() => {
     const getChartData = async () => {
@@ -34,14 +35,25 @@ const Home = () => {
           <Grid container>
             <Stats />
           </Grid>
-          <Grid container>
-            <Chart matchHistory={matchHistory} />
+          <Grid container mb={4}>
+            <Typography variant='h6' width='100%' mb={2}>
+              Last 50 games
+            </Typography>
+            {matchHistory.length > 0 ? (
+              <Chart matchHistory={matchHistory} />
+            ) : (
+              <Typography variant='body1'>No matches played yet</Typography>
+            )}
           </Grid>
           <Grid container>
             <Typography variant='h6' width='100%' mb={2}>
               Match History
             </Typography>
-            <History matchHistory={matchHistory} />
+            {matchHistory.length > 0 ? (
+              <History matchHistory={matchHistory} />
+            ) : (
+              <Typography variant='body1'>No matches played yet</Typography>
+            )}
           </Grid>
         </Grid>
       </Box>

@@ -26,7 +26,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
       res.status(200).json({ error: false });
     }
-  } catch (e: any) {
-    res.status(400).json({ error: true, errorMesssage: e.message });
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      res.status(400).json({ error: true, errorMesssage: e.message });
+    }
   }
 };

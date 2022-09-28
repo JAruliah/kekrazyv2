@@ -12,7 +12,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
       res.status(200).json({ error: false, matches: matches });
     }
-  } catch (e: any) {
-    res.status(500).json({ error: e.message });
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      res.status(500).json({ error: e.message });
+    }
   }
 };

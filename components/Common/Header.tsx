@@ -29,7 +29,6 @@ const pages: any = {
 const settings: any = {
   Profile: '#',
   Logout: '',
-  Settings: 'settings',
   mode: '',
 };
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -218,20 +217,6 @@ export const Header = () => {
                     } else {
                       return null;
                     }
-                  }
-                  if (setting == 'Settings') {
-                    return (
-                      <MenuItem
-                        key={setting}
-                        onClick={() => {
-                          handleCloseUserMenu();
-                        }}
-                      >
-                        <Link href={`${settings.Settings}/${session.user?.id}`}>
-                          <Typography textAlign='center'>{setting}</Typography>
-                        </Link>
-                      </MenuItem>
-                    );
                   }
                   if (setting == 'mode') {
                     return (

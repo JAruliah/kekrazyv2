@@ -15,7 +15,6 @@ export const Stats = () => {
       };
       _count: number;
     };
-    matches: any[];
   } | null>(null);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ export const Stats = () => {
             <Typography>AVG WPM:</Typography>
             {homeStats ? (
               <Typography sx={{ fontWeight: 'bold' }}>
-                {homeStats.userStats._avg.WPM}
+                {Math.round(homeStats.userStats._avg.WPM)}
               </Typography>
             ) : (
               <CircularProgress />
@@ -48,7 +47,7 @@ export const Stats = () => {
             <Typography>AVG ACCURACY:</Typography>
             {homeStats ? (
               <Typography sx={{ fontWeight: 'bold' }}>
-                {homeStats.userStats._avg.accuracy}
+                {Math.round(homeStats.userStats._avg.accuracy)}
               </Typography>
             ) : (
               <CircularProgress />
