@@ -44,8 +44,8 @@ const scoreboard = (props: scoreboardProps) => {
                 <TableCell component='th' scope='row'>
                   {row.username}
                 </TableCell>
-                <TableCell align='right'>{row.wpm}</TableCell>
-                <TableCell align='right'>{row.accuracy}</TableCell>
+                <TableCell align='right'>{Math.round(row.wpm)}</TableCell>
+                <TableCell align='right'>{Math.round(row.accuracy)}</TableCell>
                 <TableCell align='right'>{row.totalMatches}</TableCell>
               </TableRow>
             ))}

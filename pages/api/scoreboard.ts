@@ -20,8 +20,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         typeof v === 'bigint' ? v.toString() : v
       );
       res.status(200).send(updatedData);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        res.status(500).json({ error: e.message });
+      }
     }
   }
 };
