@@ -16,13 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         },
         _count: true,
       });
-      const matches = await prisma.matches.findMany({
-        where: { userId: session.user.id },
-        orderBy: { createdAt: 'asc' },
-      });
-      res
-        .status(200)
-        .json({ error: false, userStats: userStats, matches: matches });
+      res.status(200).json({ error: false, userStats: userStats });
     }
   } catch (e: unknown) {
     if (e instanceof Error) {

@@ -49,11 +49,15 @@ const solorace: React.FC<soloraceProps> = (props) => {
 
   // when playing a new game we must reset values and get a new quote
   const playAgain = async () => {
-    const response = await axios.get(
-      `https://api.quotable.io/random?maxLength=${QUOTE_LENGTH}`
-    );
-    await actions.playAgain(response.data);
-    startRace();
+    try {
+      const response = await axios.get(
+        `https://api.quotable.io/random?maxLength=${QUOTE_LENGTH}`
+      );
+      await actions.playAgain(response.data);
+      startRace();
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -115,14 +119,18 @@ const solorace: React.FC<soloraceProps> = (props) => {
 
 // get the props on the server side
 export async function getServerSideProps() {
-  const response = await axios.get(
-    `https://api.quotable.io/random?minLength=${QUOTE_LENGTH}`
-  );
-  return {
-    props: {
-      quote: response.data,
-    },
-  };
+  try {
+    const response = await axios.get(
+      `https://api.quotable.io/random?maxLength=${QUOTE_LENGTH}`
+    );
+    return {
+      props: {
+        quote: response.data,
+      },
+    };
+  } catch (error: any) {
+    console.log(error.message);
+  }
 }
 
 export default solorace;

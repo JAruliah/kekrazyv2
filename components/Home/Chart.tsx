@@ -1,14 +1,32 @@
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip, Area, AreaChart, ResponsiveContainer } from 'recharts';
 import Grid from '@mui/material/Grid';
 import { Matches } from '@prisma/client';
+import axios from 'axios';
 
-interface ChartProps {
-  matchHistory: Matches[];
-}
+export const Chart = () => {
+  const [matchHistory, setMatchHistory] = useState<Matches[]>([]);
+  useEffect(() => {
+    const getChartData = async () => {
+      try {
+        const response = await axios.get('/api/homeChartData');
+        setMatchHistory(response.data.matches.reverse());
+      } catch (error: any) {
+        console.log(error);
+      }
+    };
+    getChartData();
+  }, []);
 
-export const Chart = ({ matchHistory }: ChartProps) => {
+  if (matchHistory.length == 0) {
+    return (
+      <Grid item xs={12}>
+        <Typography variant='body1'>No matches found.</Typography>
+      </Grid>
+    );
+  }
+
   return (
     <Grid item xs={12} mb={4}>
       <ResponsiveContainer width='100%' height={250}>

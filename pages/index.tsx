@@ -1,27 +1,16 @@
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSession } from 'next-auth/react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import axios from 'axios';
 import { Stats } from '../components/Home/Stats';
 import { Chart } from '../components/Home/Chart';
 import { History } from '../components/Home/History';
-import { Matches } from '@prisma/client';
 
 const Home = () => {
   const { data: session, status } = useSession();
-  const [matchHistory, setMatchHistory] = useState<Matches[]>([]);
-
-  useEffect(() => {
-    const getChartData = async () => {
-      const response = await axios.get('/api/matchHistory');
-      setMatchHistory(response.data.matches);
-    };
-    getChartData();
-  }, []);
 
   if (status == 'loading') {
     return <CircularProgress />;
@@ -39,21 +28,13 @@ const Home = () => {
             <Typography variant='h6' width='100%' mb={2}>
               Last 50 games
             </Typography>
-            {matchHistory.length > 0 ? (
-              <Chart matchHistory={matchHistory} />
-            ) : (
-              <Typography variant='body1'>No matches played yet</Typography>
-            )}
+            <Chart />
           </Grid>
           <Grid container>
             <Typography variant='h6' width='100%' mb={2}>
               Match History
             </Typography>
-            {matchHistory.length > 0 ? (
-              <History matchHistory={matchHistory} />
-            ) : (
-              <Typography variant='body1'>No matches played yet</Typography>
-            )}
+            <History />
           </Grid>
         </Grid>
       </Box>

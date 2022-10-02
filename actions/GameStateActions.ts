@@ -89,5 +89,9 @@ const saveMatchStats = async (gameState: any) => {
     mode,
     timeTaken,
   };
-  await axios.post('/api/saveMatchHistory', matchStats);
+  try {
+    await axios.post('/api/saveMatchHistory', matchStats);
+  } catch (error: any) {
+    console.log(error.message);
+  }
 };

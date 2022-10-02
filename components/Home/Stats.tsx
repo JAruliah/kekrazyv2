@@ -19,8 +19,12 @@ export const Stats = () => {
 
   useEffect(() => {
     const getHomeStats = async () => {
-      const response = await axios.get('/api/homeStats');
-      setHomeStats(response.data);
+      try {
+        const response = await axios.get('/api/homeStats');
+        setHomeStats(response.data);
+      } catch (error: any) {
+        console.log(error);
+      }
     };
     getHomeStats();
   }, []);

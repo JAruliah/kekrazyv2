@@ -87,12 +87,16 @@ const scoreboard = (props: scoreboardProps) => {
 };
 
 export async function getServerSideProps() {
-  const response = await axios.get(`${process.env.API_URL}/api/scoreboard`);
-  return {
-    props: {
-      scoreboard: response.data,
-    },
-  };
+  try {
+    const response = await axios.get(`${process.env.API_URL}/api/scoreboard`);
+    return {
+      props: {
+        scoreboard: response.data,
+      },
+    };
+  } catch (error: any) {
+    console.log(error.message);
+  }
 }
 
 export default scoreboard;
