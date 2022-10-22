@@ -22,7 +22,7 @@ import Link from 'next/link';
 const pages: any = {
   Home: '/',
   'Type!': '/typerace',
-  Scoreboard: '/scoreboard',
+  Scoreboard: '/ScoreBoard',
 };
 const settings: any = {
   Profile: '#',

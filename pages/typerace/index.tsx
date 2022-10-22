@@ -27,7 +27,7 @@ const index: React.FC = () => {
               <Typography>Practice your typing speed on your own</Typography>
             </CardContent>
             <CardActions>
-              <a href={'/typerace/solorace'}>
+              <a href={'/typerace/SoloRace'}>
                 <Button variant='contained' color='secondary'>
                   Play
                 </Button>
