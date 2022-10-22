@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import PersonIcon from '@mui/icons-material/Person';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -18,7 +17,6 @@ import useGeneralStore from '../../stores/GeneralStore';
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 // const pages = ['Home', 'Type!',];
 const pages: any = {
@@ -35,7 +33,6 @@ const settings: any = {
 
 export const Header = () => {
   const { themeMode } = useGeneralStore();
-  const router = useRouter();
   const { data: session, status } = useSession();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null

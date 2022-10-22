@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 
-const register = () => {
+const Register = () => {
   const router = useRouter();
   const [registerForm, setRegisterForm] = useState({
     firstName: '',
@@ -172,4 +172,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

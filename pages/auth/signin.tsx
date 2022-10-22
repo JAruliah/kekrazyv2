@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 
-const signin = ({}) => {
+const SignIn = ({}) => {
   const router = useRouter();
   const [loginForm, setLoginForm] = useState({
     username: '',
@@ -99,4 +99,4 @@ const signin = ({}) => {
   );
 };
 
-export default signin;
+export default SignIn;

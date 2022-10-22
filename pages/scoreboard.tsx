@@ -20,7 +20,7 @@ interface scoreboardProps {
   }[];
 }
 
-const scoreboard = (props: scoreboardProps) => {
+const ScoreBoard = (props: scoreboardProps) => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.secondary.main,
@@ -99,4 +99,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default scoreboard;
+export default ScoreBoard;

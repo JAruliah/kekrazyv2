@@ -12,7 +12,7 @@ interface soloraceProps {
   quote: Quote;
 }
 
-const solorace: React.FC<soloraceProps> = (props) => {
+const SoloRace: React.FC<soloraceProps> = (props) => {
   const { data: session } = useSession();
   const { raceStarted, raceFinished, actions } = useGameStore();
   const [startCountDown, setStartCountDown] = useState(START_COUNTDOWN_TIMER);
@@ -133,4 +133,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default solorace;
+export default SoloRace;
