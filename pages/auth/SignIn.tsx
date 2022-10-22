@@ -17,7 +17,7 @@ const SignIn = ({}) => {
   });
   const [errorMessage, setErrorMessage] = useState('');
 
-  const validateSignin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const validateSignin = async (e: React.FormEvent) => {
     e.preventDefault();
     // if there are inputs then attemp the sign in
     try {
@@ -81,11 +81,9 @@ const SignIn = ({}) => {
           </Grid>
         </Grid>
         <Grid container justifyContent={'center'} mb={2}>
-          <Link href={'/auth/register'}>
+          <Link href={'/auth/Register'}>
             <a>
-              <Typography variant='body1'>
-                Don't have an account? Register here
-              </Typography>
+              <Typography variant='body1'>No account? Register here</Typography>
             </a>
           </Link>
         </Grid>
