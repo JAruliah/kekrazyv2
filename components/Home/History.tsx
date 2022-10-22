@@ -99,14 +99,16 @@ export const History = () => {
       {loading ? (
         <CircularProgress sx={{ margin: 'auto' }} />
       ) : (
-        <Button
-          color='primary'
-          variant='contained'
-          fullWidth
-          onClick={handleLoadMore}
-        >
-          Load More
-        </Button>
+        canLoadMore && (
+          <Button
+            color='primary'
+            variant='contained'
+            fullWidth
+            onClick={handleLoadMore}
+          >
+            Load More
+          </Button>
+        )
       )}
     </>
   );
