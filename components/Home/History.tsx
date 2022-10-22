@@ -40,6 +40,7 @@ export const History = () => {
       setLoading(false);
       if (response.data.matches.length < 10) {
         setCanLoadMore(false);
+        setMatchHistory(response.data.matches);
       } else {
         setMatchHistory([...matchHistory, ...response.data.matches]);
       }
