@@ -36,7 +36,7 @@ const ScoreBoard = () => {
     const getScoreBoardData = async () => {
       try {
         const response = await axios.get(`/api/scoreboard`);
-        setScoreBoardData(response.data.reverse());
+        setScoreBoardData(response.data);
         setLoaded(true);
       } catch (error: any) {
         console.log(error);
