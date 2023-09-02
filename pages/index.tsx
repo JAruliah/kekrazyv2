@@ -78,13 +78,16 @@ const Home = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid component={Card} style={{ height: '100%' }}>
+          <Grid
+            component={Card}
+            sx={{ backgroundColor: '#2f3f59', height: '100%', width: '100%' }}
+          >
             <CardContent
               sx={{
                 display: 'flex',
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                backgroundColor: '#2f3f59',
+                width: '100%',
               }}
             >
               <Typography color={'white'}>
