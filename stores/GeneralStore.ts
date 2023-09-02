@@ -7,7 +7,6 @@ export const initialState: GeneralState = {
 
 const useGeneralStore = create<Store>((set: any, get: any) => ({
   ...initialState,
-  // actions: gameStateActions(set, get),
 }));
 
 export default useGeneralStore;

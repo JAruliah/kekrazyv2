@@ -218,13 +218,15 @@ export const Header = () => {
                   if (setting == 'mode') {
                     return (
                       <MenuItem key={setting}>
-                        <IconButton onClick={toggleThemeMode} color='inherit'>
-                          {themeMode === 'dark' ? (
-                            <Brightness7Icon />
-                          ) : (
-                            <Brightness4Icon />
-                          )}
-                        </IconButton>
+                        <Box sx={{ flexGrow: 1 }} textAlign={'center'}>
+                          <IconButton onClick={toggleThemeMode} color='inherit'>
+                            {themeMode === 'dark' ? (
+                              <Brightness7Icon />
+                            ) : (
+                              <Brightness4Icon />
+                            )}
+                          </IconButton>
+                        </Box>
                       </MenuItem>
                     );
                   }

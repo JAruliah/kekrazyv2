@@ -2,7 +2,7 @@ import { GAME_TIMER } from '../constantVariables';
 import { initialState } from '../stores/GameStore';
 import axios from 'axios';
 
-const GameStateActions = (set: any, get: any) => {
+const GameStoreActions = (set: any, get: any) => {
   return {
     // set state
     setGameState: (input: any) => {
@@ -18,6 +18,18 @@ const GameStateActions = (set: any, get: any) => {
       // set an interval
       const gameTime = setInterval(() => {
         const raceFinished = get().raceFinished;
+        // if the timer reaches 0 clear the interval
+        if (gameTimerCopy == 0 || raceFinished) {
+          clearInterval(gameTime);
+          set(() => ({ raceFinished: true }));
+          set(() => ({ raceStarted: false }));
+          // if a user is logged in save the match stats
+          if (session) {
+            const afterGameState = get();
+            saveMatchStats(afterGameState);
+          }
+          return;
+        }
         if (scoreCalculateInterval == undefined) {
           // set an interval to update game scores while playing
           scoreCalculateInterval = setInterval(() => {
@@ -43,16 +55,6 @@ const GameStateActions = (set: any, get: any) => {
           }, 1000);
         }
         set((state: any) => ({ gameTimer: state.gameTimer - 1 }));
-        // if the timer reaches 0 clear the interval
-        if (gameTimerCopy == 0 || raceFinished) {
-          set(() => ({ raceFinished: true }));
-          set(() => ({ raceStarted: false }));
-          clearInterval(gameTime);
-          if (session) {
-            const afterGameState = get();
-            saveMatchStats(afterGameState);
-          }
-        }
         gameTimerCopy--;
       }, 1000);
     },
@@ -68,7 +70,7 @@ const GameStateActions = (set: any, get: any) => {
     },
   };
 };
-export default GameStateActions;
+export default GameStoreActions;
 // save match stats to the database
 const saveMatchStats = async (gameState: any) => {
   const { wpmScore, accuracyScore, startedAt, quote, mode } = gameState;

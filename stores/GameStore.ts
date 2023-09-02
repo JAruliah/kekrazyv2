@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { Store, GameState } from '../interfaces/GameStore';
 import { GAME_TIMER } from '../constantVariables';
-import GameStateActions from '../actions/GameStateActions';
+import GameStoreActions from '../actions/GameStoreActions';
 
 export const initialState: GameState = {
   raceStarted: false,
@@ -24,7 +24,7 @@ export const initialState: GameState = {
 
 const useGameStore = create<Store>((set: any, get: any) => ({
   ...initialState,
-  actions: GameStateActions(set, get),
+  actions: GameStoreActions(set, get),
 }));
 
 export default useGameStore;

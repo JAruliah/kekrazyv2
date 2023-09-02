@@ -37,13 +37,11 @@ export const History = () => {
       const response = await axios.post('/api/matchHistory', {
         skip: skip,
       });
-      setLoading(false);
       if (response.data.matches.length < 10) {
         setCanLoadMore(false);
-        setMatchHistory(response.data.matches);
-      } else {
-        setMatchHistory([...matchHistory, ...response.data.matches]);
       }
+      setMatchHistory([...matchHistory, ...response.data.matches]);
+      setLoading(false);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -55,7 +53,15 @@ export const History = () => {
     }
   };
 
-  if (matchHistory.length == 0) {
+  if (loading == true) {
+    return (
+      <Grid item xs={12}>
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
+  if (matchHistory.length == 0 && loading == false) {
     return (
       <Grid item xs={12}>
         <Typography variant='body1'>No matches found.</Typography>

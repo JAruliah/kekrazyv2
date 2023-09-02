@@ -8,9 +8,11 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SignIn = ({}) => {
   const router = useRouter();
+  const [signInLoading, setSignInLoading] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: '',
     password: '',
@@ -21,6 +23,7 @@ const SignIn = ({}) => {
     e.preventDefault();
     // if there are inputs then attemp the sign in
     try {
+      setSignInLoading(true);
       signIn('credentials', {
         username: loginForm.username,
         password: loginForm.password,
@@ -28,6 +31,7 @@ const SignIn = ({}) => {
       }).then((res) => {
         if (res?.ok == false) {
           setErrorMessage('Please ensure your credentials are correct');
+          setSignInLoading(false);
         } else {
           router.push('/');
         }
@@ -88,9 +92,16 @@ const SignIn = ({}) => {
           </Link>
         </Grid>
         <Grid container justifyContent={'center'}>
-          <Button type='submit' variant='contained' color='secondary'>
-            Sign in
-          </Button>
+          {
+            // if loading show loading spinner
+            signInLoading ? (
+              <CircularProgress />
+            ) : (
+              <Button type='submit' variant='contained' color='secondary'>
+                Sign in
+              </Button>
+            )
+          }
         </Grid>
       </form>
     </Box>
