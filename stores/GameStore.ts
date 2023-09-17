@@ -19,6 +19,7 @@ export const initialState: GameState = {
   wpmScore: 0,
   accuracyScore: 0,
   startedAt: new Date(),
+  finishedAt: new Date(),
   mode: 'solo',
 };
 
