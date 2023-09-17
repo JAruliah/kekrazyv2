@@ -58,7 +58,6 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     let timeDiff = finishedAt.getTime() - startedAt.getTime();
     let seconds = timeDiff / 1000;
     let minutes = seconds / 60;
-    console.log(completedWords, minutes);
     let finishedWPM = Math.floor(completedWords / minutes);
     // calculate final accuracy
     let finalAccuracy = Math.floor(

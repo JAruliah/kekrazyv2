@@ -12,8 +12,6 @@ const GameStoreActions = (set: any, get: any) => {
     // start the game timer
     startGameTimer: (session: any) => {
       let scoreCalculateInterval: NodeJS.Timer;
-      let startedAt = new Date();
-      set(() => ({ startedAt: startedAt }));
       // get the state
       const gameTimer = get().gameTimer;
       let gameTimerCopy = gameTimer;
@@ -41,8 +39,9 @@ const GameStoreActions = (set: any, get: any) => {
             const correctInputs = get().correctInputs;
             const incorrectInputs = get().incorrectInputs;
             const pointerIndex = get().pointerIndex;
+            const startedAtTime = get().startedAt;
             // calculate wpm
-            let secondsPassed = startedAt.getTime() - new Date().getTime();
+            let secondsPassed = startedAtTime.getTime() - new Date().getTime();
             let timePassed = Math.abs(secondsPassed / 1000);
             let wpm = Math.floor(completedWords / (timePassed / 60));
             //calculate accuracy

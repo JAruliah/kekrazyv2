@@ -44,6 +44,7 @@ const SoloRace: React.FC<soloraceProps> = (props) => {
         actions.setGameState({
           raceStarted: true,
           raceFinished: false,
+          startedAt: new Date(),
         });
         actions.startGameTimer(session);
       }
