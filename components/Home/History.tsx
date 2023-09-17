@@ -53,7 +53,7 @@ export const History = () => {
     }
   };
 
-  if (loading == true) {
+  if (loading == true && matchHistory.length == 0) {
     return (
       <Grid item xs={12}>
         <CircularProgress />

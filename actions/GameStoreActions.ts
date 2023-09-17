@@ -19,8 +19,9 @@ const GameStoreActions = (set: any, get: any) => {
       const gameTime = setInterval(() => {
         const raceFinished = get().raceFinished;
         // if the timer reaches 0 clear the interval
-        if (gameTimerCopy == 0 || raceFinished) {
+        if (raceFinished || gameTimerCopy == 0) {
           clearInterval(gameTime);
+          clearInterval(scoreCalculateInterval);
           set(() => ({ raceFinished: true }));
           set(() => ({ raceStarted: false }));
           // if a user is logged in save the match stats
@@ -38,8 +39,10 @@ const GameStoreActions = (set: any, get: any) => {
             const correctInputs = get().correctInputs;
             const incorrectInputs = get().incorrectInputs;
             const pointerIndex = get().pointerIndex;
+            const startedAtTime = get().startedAt;
             // calculate wpm
-            let timePassed = GAME_TIMER - gameTimerCopy;
+            let secondsPassed = startedAtTime.getTime() - new Date().getTime();
+            let timePassed = Math.abs(secondsPassed / 1000);
             let wpm = Math.floor(completedWords / (timePassed / 60));
             //calculate accuracy
             let accuracy = Math.floor(
@@ -48,9 +51,6 @@ const GameStoreActions = (set: any, get: any) => {
             set(() => ({ wpmScore: wpm }));
             if (accuracy <= 100) {
               set(() => ({ accuracyScore: accuracy }));
-            }
-            if (raceFinished) {
-              clearInterval(scoreCalculateInterval);
             }
           }, 1000);
         }
@@ -73,8 +73,9 @@ const GameStoreActions = (set: any, get: any) => {
 export default GameStoreActions;
 // save match stats to the database
 const saveMatchStats = async (gameState: any) => {
-  const { wpmScore, accuracyScore, startedAt, quote, mode } = gameState;
-  const endedAt = new Date();
+  const { wpmScore, accuracyScore, startedAt, quote, mode, finishedAt } =
+    gameState;
+  const endedAt = finishedAt;
   const { author, content, length, tags } = quote;
   const timeTaken = Math.floor(
     (endedAt.getTime() - startedAt.getTime()) / 1000

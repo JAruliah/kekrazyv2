@@ -22,6 +22,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     completedWords,
     correctInputs,
     incorrectInputs,
+    startedAt,
     actions,
   } = useGameStore();
   const { themeMode } = useGeneralStore();
@@ -47,6 +48,32 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     actions.setGameState({
       wordArray: quoteArray,
       quoteMap: quoteMapCopy,
+    });
+  };
+
+  const finishRace = (completedWords: number) => {
+    setInputValue('');
+    // calcualte finished WPM
+    let finishedAt = new Date();
+    let timeDiff = finishedAt.getTime() - startedAt.getTime();
+    let seconds = timeDiff / 1000;
+    let minutes = seconds / 60;
+    let finishedWPM = Math.round(completedWords / minutes);
+    // calculate final accuracy
+    let finalAccuracy = Math.round(
+      (correctInputs / (correctInputs + incorrectInputs)) * 100
+    );
+
+    actions.setGameState({
+      raceFinished: true,
+      raceStarted: false,
+      pointerIndex: 0,
+      currentWord: 0,
+      firstIncorrectIndex: null,
+      completedWords: completedWords + 1,
+      finishedAt: finishedAt,
+      wpmScore: finishedWPM,
+      accuracy: finalAccuracy,
     });
   };
 
@@ -83,15 +110,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         if (inputFieldLength == currentWordArray.length - 1) {
           // if the word inputted is correct end the game
           if (e.target.value == currentWordString.trim()) {
-            setInputValue('');
-            actions.setGameState({
-              raceFinished: true,
-              raceStarted: false,
-              pointerIndex: 0,
-              currentWord: 0,
-              firstIncorrectIndex: null,
-              completedWords: completedWords + 1,
-            });
+            finishRace(completedWords);
           }
         }
         // if it's not the last letter keep moving pointer

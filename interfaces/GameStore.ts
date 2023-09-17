@@ -16,6 +16,7 @@ export interface GameState {
   wpmScore: number;
   accuracyScore: number;
   startedAt: Date;
+  finishedAt: Date;
   mode: 'solo' | 'multiplayer';
 }
 
