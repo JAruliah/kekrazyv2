@@ -58,9 +58,10 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     let timeDiff = finishedAt.getTime() - startedAt.getTime();
     let seconds = timeDiff / 1000;
     let minutes = seconds / 60;
-    let finishedWPM = Math.round(completedWords / minutes);
+    console.log(completedWords, minutes);
+    let finishedWPM = Math.floor(completedWords / minutes);
     // calculate final accuracy
-    let finalAccuracy = Math.round(
+    let finalAccuracy = Math.floor(
       (correctInputs / (correctInputs + incorrectInputs)) * 100
     );
 
@@ -70,7 +71,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       pointerIndex: 0,
       currentWord: 0,
       firstIncorrectIndex: null,
-      completedWords: completedWords + 1,
+      completedWords: completedWords,
       finishedAt: finishedAt,
       wpmScore: finishedWPM,
       accuracy: finalAccuracy,
@@ -110,7 +111,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         if (inputFieldLength == currentWordArray.length - 1) {
           // if the word inputted is correct end the game
           if (e.target.value == currentWordString.trim()) {
-            finishRace(completedWords);
+            finishRace(completedWords + 1);
           }
         }
         // if it's not the last letter keep moving pointer
