@@ -32,7 +32,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     formatGameQuote();
     if (raceStarted) {
       inputRef.current?.focus();
-      actions.setGameState({ startedAt: new Date(), mode: 'solo' });
+      actions.setGameState({ mode: 'solo' });
     }
   }, [raceStarted]);
 

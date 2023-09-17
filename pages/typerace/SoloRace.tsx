@@ -41,7 +41,11 @@ const SoloRace: React.FC<soloraceProps> = (props) => {
       });
       if (count == START_COUNTDOWN_TIMER) {
         setCountDownStarted(false);
-        actions.setGameState({ raceStarted: true, raceFinished: false });
+        actions.setGameState({
+          raceStarted: true,
+          raceFinished: false,
+          startedAt: new Date(),
+        });
         actions.startGameTimer(session);
       }
     }, 1000);
