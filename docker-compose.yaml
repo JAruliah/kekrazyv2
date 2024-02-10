@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: kekrazyv2
+    command: npm run dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/app' # mount the current directory into the container at /app
+      - /app/node_modules/ # don't mount node_modules
+
+# RUN THIS COMMAND TO RUN THE DOCKER IMAGE IN DEV MODE
+# ENSURE THERE IS A .env FILE IN THE ROOT DIRECTORY
+# docker-compose up --build
