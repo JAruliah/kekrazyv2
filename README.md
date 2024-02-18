@@ -14,6 +14,7 @@ This project is a typing test application. When a race is started a phrase will 
 - Auth0
 - MySQL
 - Prisma
+- Docker
 - Hosted on Vercel
 
 ## Future Features
