@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { prisma } from '../../../prisma/prismaClient';
 import bcrypt from 'bcrypt';
-// import login from '../login';
+
 export default NextAuth({
   secret: process.env.AUTH_SECRET,
   providers: [
