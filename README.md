@@ -1,6 +1,6 @@
 # KeKrazyV2
 
-### Live Site: kekrazyv2.vercel.app
+### Live Site: https://kekrazyv2.vercel.app
 
 ## Description
 
