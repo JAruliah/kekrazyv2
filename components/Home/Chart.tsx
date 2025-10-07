@@ -9,15 +9,22 @@ import axios from 'axios';
 export const Chart = () => {
   const [matchHistory, setMatchHistory] = useState<Matches[]>([]);
   const [getChartDataLoading, setGetChartDataLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   useEffect(() => {
     const getChartData = async () => {
       try {
         setGetChartDataLoading(true);
         const response = await axios.get('/api/homeChartData');
-        setMatchHistory(response.data.matches.reverse());
+        const matches: Matches[] = Array.isArray(response.data?.matches)
+          ? response.data.matches
+          : [];
+        setMatchHistory(matches.reverse());
+        setErrorMessage(null);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage('Unable to load chart data. Please try again later.');
+      } finally {
         setGetChartDataLoading(false);
-      } catch (error: any) {
-        console.log(error);
       }
     };
     getChartData();
@@ -36,7 +43,9 @@ export const Chart = () => {
   if (matchHistory.length == 0 && getChartDataLoading == false) {
     return (
       <Grid item xs={12}>
-        <Typography variant='body1'>No matches found.</Typography>
+        <Typography variant='body1'>
+          {errorMessage ? errorMessage : 'No matches found.'}
+        </Typography>
       </Grid>
     );
   }

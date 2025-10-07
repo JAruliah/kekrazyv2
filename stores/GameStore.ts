@@ -23,7 +23,7 @@ export const initialState: GameState = {
   mode: 'solo',
 };
 
-const useGameStore = create<Store>((set: any, get: any) => ({
+const useGameStore = create<Store>((set, get) => ({
   ...initialState,
   actions: GameStoreActions(set, get),
 }));
