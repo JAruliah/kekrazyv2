@@ -1,12 +1,14 @@
 import { Quote } from './SoloRace';
 
+export type QuoteCharacterMap = Record<string, string[]>;
+
 export interface GameState {
   raceStarted: boolean;
   raceFinished: boolean;
   quote: Quote;
-  quoteMap: any;
+  quoteMap: QuoteCharacterMap;
   currentWord: number;
-  wordArray: [];
+  wordArray: string[];
   pointerIndex: number;
   firstIncorrectIndex: null | number;
   gameTimer: number;
@@ -21,27 +23,12 @@ export interface GameState {
 }
 
 export interface Actions {
-  setGameState: () => void;
-  startGameTimer: () => void;
-  playAgain: () => void;
+  setGameState: (input: Partial<GameState>) => void;
+  startGameTimer: (session?: unknown) => void;
+  playAgain: (quote: Quote) => Promise<void> | void;
   resetGameState: () => void;
 }
-export interface Store {
-  raceStarted: boolean;
-  raceFinished: boolean;
-  quote: Quote;
-  quoteMap: any;
-  currentWord: number;
-  wordArray: [];
-  pointerIndex: number;
-  firstIncorrectIndex: null | number;
-  gameTimer: number;
-  completedWords: number;
-  correctInputs: number;
-  incorrectInputs: number;
-  wpmScore: number;
-  accuracyScore: number;
-  actions: any;
-  startedAt: Date;
-  mode: 'solo' | 'multiplayer';
+
+export interface Store extends GameState {
+  actions: Actions;
 }

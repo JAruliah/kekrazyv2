@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useGameStore from '../../stores/GameStore';
 import { GameHeader } from './GameHeader';
 import Grid from '@mui/material/Grid';
@@ -26,30 +26,38 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     actions,
   } = useGameStore();
   const { themeMode } = useGeneralStore();
-  const inputRef = useRef<any>(null);
-  // on mount, change status to race started and format the game quote
-  useEffect(() => {
-    formatGameQuote();
-    if (raceStarted) {
-      inputRef.current?.focus();
-      actions.setGameState({ mode: 'solo' });
-    }
-  }, [raceStarted]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // we need to split the quote into an array
-  const formatGameQuote = () => {
-    let quoteArray = quote.content.split(' ');
-    let quoteMapCopy: any = {};
-    // map the words to the array of characters
-    quoteArray.forEach((word) => {
+  const formatGameQuote = useCallback(() => {
+    if (!quote.content) {
+      actions.setGameState({ wordArray: [], quoteMap: {} });
+      return;
+    }
+    const quoteArray = quote.content.split(' ');
+    const quoteMapCopy: Record<string, string[]> = {};
+    // map the words to the array of characters keyed by index to prevent collisions
+    quoteArray.forEach((word, index) => {
       const wordArray = word.split('').concat(' ');
-      quoteMapCopy[`${word}`] = wordArray;
+      quoteMapCopy[String(index)] = wordArray;
     });
     actions.setGameState({
       wordArray: quoteArray,
       quoteMap: quoteMapCopy,
     });
-  };
+  }, [actions, quote.content]);
+
+  useEffect(() => {
+    formatGameQuote();
+  }, [formatGameQuote]);
+
+  // on mount, change status to race started and format the game quote
+  useEffect(() => {
+    if (raceStarted) {
+      inputRef.current?.focus();
+      actions.setGameState({ mode: 'solo' });
+    }
+  }, [actions, raceStarted]);
 
   const finishRace = (completedWords: number) => {
     setInputValue('');
@@ -58,11 +66,11 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     let timeDiff = finishedAt.getTime() - startedAt.getTime();
     let seconds = timeDiff / 1000;
     let minutes = seconds / 60;
-    let finishedWPM = Math.floor(completedWords / minutes);
+    const finishedWPM = minutes > 0 ? Math.floor(completedWords / minutes) : 0;
     // calculate final accuracy
-    let finalAccuracy = Math.floor(
-      (correctInputs / (correctInputs + incorrectInputs)) * 100
-    );
+    const totalInputs = correctInputs + incorrectInputs;
+    const finalAccuracy =
+      totalInputs > 0 ? Math.floor((correctInputs / totalInputs) * 100) : 100;
 
     actions.setGameState({
       raceFinished: true,
@@ -73,7 +81,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
       completedWords: completedWords,
       finishedAt: finishedAt,
       wpmScore: finishedWPM,
-      accuracy: finalAccuracy,
+      accuracyScore: Math.min(finalAccuracy, 100),
     });
   };
 
@@ -81,11 +89,14 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    let currentWordArray = quoteMap[`${wordArray[currentWord]}`];
-    let currentWordString = wordArray[currentWord] + ' ';
-    let inputFieldLength = e.target.value.length;
-    let pointerIndexDiff = inputFieldLength - inputValue.length;
-    let currentWordUpUntil = currentWordString.slice(0, inputFieldLength);
+    const currentWordArray = quoteMap[String(currentWord)];
+    if (!currentWordArray) {
+      return;
+    }
+    const currentWordString = `${wordArray[currentWord] ?? ''} `;
+    const inputFieldLength = e.target.value.length;
+    const pointerIndexDiff = inputFieldLength - inputValue.length;
+    const currentWordUpUntil = currentWordString.slice(0, inputFieldLength);
     // don't allow more characters than the current word
     if (inputFieldLength <= currentWordArray.length) {
       //if the character inputted is incorrect , keep track of it's index
@@ -144,7 +155,8 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
   const renderWords = () => {
     let currentLetterIndex = 0;
     return wordArray.map((word: string, index: number) => {
-      return quoteMap[word].map((letter: string, i: number) => {
+      const characters = quoteMap[String(index)] ?? [];
+      return characters.map((letter: string, i: number) => {
         currentLetterIndex++;
         return (
           <Box

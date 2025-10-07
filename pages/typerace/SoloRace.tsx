@@ -20,7 +20,7 @@ const SoloRace: React.FC<soloraceProps> = (props) => {
 
   useEffect(() => {
     actions.setGameState({ quote: props.quote });
-  }, []);
+  }, [actions, props.quote]);
 
   // start count down interval, start game when countdown is done
   const startRace = () => {

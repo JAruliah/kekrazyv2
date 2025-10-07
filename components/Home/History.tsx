@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -27,28 +27,38 @@ export const History = () => {
   const [matchHistory, setMatchHistory] = useState<Matches[]>([]);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const getHistoryData = useCallback(
+    async (skip: number) => {
+      try {
+        setLoading(true);
+        setErrorMessage(null);
+        const response = await axios.post('/api/matchHistory', {
+          skip: skip,
+        });
+        const matches: Matches[] = Array.isArray(response.data?.matches)
+          ? response.data.matches
+          : [];
+        if (matches.length < 10) {
+          setCanLoadMore(false);
+        }
+        setMatchHistory((prev) => [...prev, ...matches]);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage('Unable to load match history. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     getHistoryData(0);
-  }, []);
-
-  const getHistoryData = async (skip: number) => {
-    try {
-      setLoading(true);
-      const response = await axios.post('/api/matchHistory', {
-        skip: skip,
-      });
-      if (response.data.matches.length < 10) {
-        setCanLoadMore(false);
-      }
-      setMatchHistory([...matchHistory, ...response.data.matches]);
-      setLoading(false);
-    } catch (error: any) {
-      console.log(error.message);
-    }
-  };
+  }, [getHistoryData]);
 
   const handleLoadMore = () => {
-    if (canLoadMore) {
+    if (canLoadMore && !loading) {
       getHistoryData(matchHistory.length);
     }
   };
@@ -64,7 +74,9 @@ export const History = () => {
   if (matchHistory.length == 0 && loading == false) {
     return (
       <Grid item xs={12}>
-        <Typography variant='body1'>No matches found.</Typography>
+        <Typography variant='body1'>
+          {errorMessage ? errorMessage : 'No matches found.'}
+        </Typography>
       </Grid>
     );
   }
@@ -111,6 +123,7 @@ export const History = () => {
             variant='contained'
             fullWidth
             onClick={handleLoadMore}
+            disabled={loading}
           >
             Load More
           </Button>
