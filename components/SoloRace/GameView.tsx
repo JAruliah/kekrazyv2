@@ -58,11 +58,12 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
     let timeDiff = finishedAt.getTime() - startedAt.getTime();
     let seconds = timeDiff / 1000;
     let minutes = seconds / 60;
-    let finishedWPM = Math.floor(completedWords / minutes);
+    let finishedWPM = minutes > 0 ? Math.floor(completedWords / minutes) : 0;
     // calculate final accuracy
-    let finalAccuracy = Math.floor(
-      (correctInputs / (correctInputs + incorrectInputs)) * 100
-    );
+    let finalAccuracy =
+      correctInputs + incorrectInputs > 0
+        ? Math.floor((correctInputs / (correctInputs + incorrectInputs)) * 100)
+        : 100;
 
     actions.setGameState({
       raceFinished: true,
@@ -195,9 +196,7 @@ export const GameView: React.FC<GameViewProps> = ({}) => {
         <Grid
           item
           md={6}
-          className={
-            raceFinished ? `${styles.gameWords}` : `${styles.gameWords}`
-          }
+          className={`${styles.gameWords}`}
           sx={raceFinished ? { bgcolor: 'secondary.main' } : {}}
         >
           {renderWords()}

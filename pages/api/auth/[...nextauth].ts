@@ -16,7 +16,6 @@ export default NextAuth({
       async authorize(credentials, req) {
         try {
           // db lookup
-          const saltRounds = 10;
           if (credentials != undefined) {
             const userObj = await prisma.user.findFirst({
               select: {

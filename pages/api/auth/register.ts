@@ -5,8 +5,14 @@ import bcrypt from 'bcrypt';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const data = req.body;
+    if (!data.password || data.password.length < 6) {
+      return res.status(400).json({ error: true, message: 'Password must be at least 6 characters' });
+    }
     const saltRounds = 10;
     bcrypt.hash(data.password, saltRounds, async (err, hash) => {
+      if (err) {
+        return res.status(500).json({ error: true, message: 'oops something went wrong' });
+      }
       try {
         // try creating a new user
         await prisma.user.create({

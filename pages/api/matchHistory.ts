@@ -14,6 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         take: 10,
       });
       res.status(200).json({ error: false, matches: matches });
+    } else {
+      res.status(401).json({ error: true, message: 'Unauthorized' });
     }
   } catch (e: unknown) {
     if (e instanceof Error) {

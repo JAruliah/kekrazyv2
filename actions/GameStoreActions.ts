@@ -43,6 +43,7 @@ const GameStoreActions = (set: any, get: any) => {
             // calculate wpm
             let secondsPassed = startedAtTime.getTime() - new Date().getTime();
             let timePassed = Math.abs(secondsPassed / 1000);
+            if (timePassed === 0 || pointerIndex === 0) return;
             let wpm = Math.floor(completedWords / (timePassed / 60));
             //calculate accuracy
             let accuracy = Math.floor(
